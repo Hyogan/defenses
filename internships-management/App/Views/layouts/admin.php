@@ -1,7 +1,7 @@
 <?php
 $stylesheet = "/assets/css/admin.css";
 $header = APP_PATH . "/Views/layouts/partials/admin.php";
-$footer = APP_PATH . "/Views/layouts/partials/footer.php";
+// $footer = APP_PATH . "/Views/layouts/partials/footer.php";
 
 ob_start(); ?>
 <div class="admin-container" style="min-height: 100vh; display: flex; flex-direction: column;">

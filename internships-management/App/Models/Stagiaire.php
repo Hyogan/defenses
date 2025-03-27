@@ -56,9 +56,17 @@ class Stagiaire extends Model {
         return $db->query("DELETE FROM stagiaires WHERE utilisateur_id = ?", [$userId]);
     }
 
-    public static function getAllStagiaires() {
+    public static function getAllStagiaires($limit = null)
+    {
         $db = Database::getInstance();
-        return $db->fetchAll("SELECT * FROM stagiaires");
+        $sql = "SELECT s.*,u.role, u.nom, u.email, u.prenom
+                FROM stagiaires s  
+                JOIN utilisateurs u ON u.id = s.utilisateur_id" ;
+        if($limit != null) {
+          $sql.= " LIMIT ?";
+          return $db->fetchAll($sql, [$limit]);
+        }
+        return $db->fetchAll(sql: $sql);
     }
 
     // Historique des tâches d'un stagiaire
@@ -67,7 +75,24 @@ class Stagiaire extends Model {
         return $db->fetchAll("SELECT * FROM tasks WHERE stagiaire_id = ?", [$stagiaireId]);
     }
 
-    public static function getById($stagiaireId){
-            return null;
-    }
+    public static function getByTuteurId($tuteurId) {
+      $db = Database::getInstance();
+      $sql = "SELECT stagiaires.*, utilisateurs.nom, utilisateurs.prenom, utilisateurs.email 
+            FROM stagiaires JOIN utilisateurs 
+            ON stagiaires.utilisateur_id = utilisateurs.id 
+            JOIN affectations ON stagiaires.id = affectations.stagiaire_id 
+            WHERE affectations.tuteur_id = ?";
+      return $db->fetchAll($sql,[$tuteurId]);
+      // $stmt->execute([$tuteurId]);
+      // return $stmt->fetchAll(PDO::FETCH_ASSOC);
+  }
+  public static function getById($stagiaireId)
+   {
+      $sql = "SELECT stagiaires.*, utilisateurs.* 
+              FROM stagiaires 
+              JOIN utilisateurs ON stagiaires.utilisateur_id = utilisateurs.id 
+              WHERE stagiaires.id = ?";
+      $db = Database::getInstance();
+      return $db->fetchAll($sql);
+  }
 }

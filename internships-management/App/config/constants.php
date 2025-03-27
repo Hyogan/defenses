@@ -1,5 +1,5 @@
 <?php
-define('APP_URL', 'http://localhost/admin-elect');
+define('APP_URL', 'http://localhost/gestion-stagiaire');
 define('APP_NAME', 'Admin Elect');
 define('APP_EMAIL', 'nelson@gmail.com');
 define('APP_VERSION', '1.0.0');

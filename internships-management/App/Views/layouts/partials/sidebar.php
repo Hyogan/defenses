@@ -46,9 +46,9 @@
         const menuData = {
             admin: [
                 { title: "Dashboard", icon: "fas fa-tachometer-alt", link: "dashboard/admin" },
-                { title: "Utilisateurs", icon: "fas fa-users", link: "user/management" },
-                { title: "Stagiaires", icon: "fas fa-graduation-cap", link: "interns/management" },
-                { title: "Tuteurs", icon: "fas fa-user-tie", link: "tutors/management" },
+                // { title: "Utilisateurs", icon: "fas fa-users", link: "user/management" },
+                { title: "Stagiaires", icon: "fas fa-graduation-cap", link: "dashboard/stagiaires" },
+                { title: "Tuteurs", icon: "fas fa-user-tie", link: "dashboard/tuteurs" },
                 { title: "Affectations", icon: "fas fa-link", link: "assignments" },
                 { title: "Tâches", icon: "fas fa-tasks", link: "tasks" },
                 { title: "Documents", icon: "fas fa-folder-open", link: "documents" },
@@ -56,7 +56,7 @@
                 { title: "Retards", icon: "fas fa-exclamation-triangle", link: "retards" }
             ],
             superviseur: [
-                { title: "Dashboard", icon: "fas fa-tachometer-alt", link: "dashboard/superviseur" },
+                { title: "Dashboard", icon: "fas fa-tachometer-alt", link: "/superviseur" },
                 { title: "Stagiaires", icon: "fas fa-graduation-cap", link: "interns/list" },
                 { title: "Tâches", icon: "fas fa-tasks", link: "tasks/supervisor" },
                 { title: "Documents", icon: "fas fa-folder-open", link: "documents/supervisor" },
@@ -64,33 +64,35 @@
                 { title: "Retards", icon: "fas fa-exclamation-triangle", link: "retards" }
             ],
             tuteur: [
-                { title: "Dashboard", icon: "fas fa-tachometer-alt", link: "dashboard/tuteur" },
+                { title: "Dashboard", icon: "fas fa-tachometer-alt", link: "/tuteur" },
                 { title: "Stagiaires", icon: "fas fa-graduation-cap", link: "interns/tutor" },
                 { title: "Tâches", icon: "fas fa-tasks", link: "tasks/tutor" },
                 { title: "Documents", icon: "fas fa-folder-open", link: "documents/tutor" },
                 { title: "Evaluations", icon: "fas fa-star-half-alt", link: "evaluations/tutor" },
             ],
             stagiaire: [
-                { title: "Dashboard", icon: "fas fa-tachometer-alt", link: "dashboard/stagiaire" },
+                { title: "Dashboard", icon: "fas fa-tachometer-alt", link: "/stagiaire" },
                 { title: "Tâches", icon: "fas fa-tasks", link: "tasks/intern" },
                 { title: "Documents", icon: "fas fa-folder-open", link: "documents/intern" },
             ],
         };
 
-        const role = "superviseur"; // À remplacer par le rôle réel de l'utilisateur, récupéré de votre système d'authentification
+        const role = "<?php echo $_SESSION['user_role']; ?>"; 
+        // console.log(role);
         const menuElement = document.getElementById("menu");
 
-        function loadContent(page) {
-            //  Mise à jour pour fonctionner avec un routeur PHP.
-            //  Redirige simplement vers l'URL correspondante.
-            window.location.href = page;
-        }
+        // function loadContent(page) {
+        //     //  Mise à jour pour fonctionner avec un routeur PHP.
+        //     //  Redirige simplement vers l'URL correspondante.
+        //     window.location.href = page;
+        // }
 
         const menuItems = menuData[role];
         if (menuItems) {
             menuItems.forEach(item => {
+                console.log(role);
                 const li = document.createElement("li");
-                li.innerHTML = `<a href="${item.link}"><i class="${item.icon}"></i>${item.title}</a>`;
+                li.innerHTML = `<a href="/${item.link}"><i class="${item.icon}"></i>${item.title}</a>`;
                 menuElement.appendChild(li);
             });
         } else {

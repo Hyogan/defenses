@@ -27,9 +27,9 @@ $currentPage = $currentPage ?? '';
     <?php endif; ?>
 </head>
 <body>
-    <header class="navbar navbar-dark sticky-top bg-primary flex-md-nowrap p-0 shadow">
+    <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
         <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="<?= APP_URL ?>/dashboard">
-            Admin Elect
+            Gestion stagiaires
         </a>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -41,7 +41,7 @@ $currentPage = $currentPage ?? '';
                     <span class="nav-link px-3 text-white">
                         <i class="fas fa-user me-2"></i><?= $_SESSION['user_name'] ?? 'Utilisateur' ?>
                     </span>
-                    <a class="nav-link px-3" href="<?= APP_URL ?>/auth/logout">
+                    <a class="nav-link px-3" href="/auth/logout">
                         <i class="fas fa-sign-out-alt"></i> Déconnexion
                     </a>
                 <?php endif; ?>

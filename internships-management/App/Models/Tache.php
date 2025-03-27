@@ -91,8 +91,21 @@ class Tache extends Model {
     }
 
     // Obtenir les tâches d'un stagiaire
-    public static function getByStagiaire($stagiaireId) {
+    public static function getByStagiaire($stagiaireId)
+    {
         $db = Database::getInstance();
         return $db->fetchAll("SELECT * FROM taches WHERE stagiaire_id = ?", [$stagiaireId]);
     }
+
+    public static function getAllTask($limit = null)
+    {
+        $db = Database::getInstance();
+        $sql = "SELECT * FROM taches" ;
+        if($limit != null) {
+          $sql.= " LIMIT ?";
+          return $db->fetchAll($sql, [$limit]);
+        }
+        return $db->fetchAll(sql: $sql);
+    }
+
 }

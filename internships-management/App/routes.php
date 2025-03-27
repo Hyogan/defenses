@@ -21,15 +21,19 @@ $routes = [
     '/user/store' => [UserController::class, 'store'],
     
     // Routes pour la gestion des stagiaires
-    '/stagiaires' => [StagiaireController::class, 'index'],
-    '/stagiaire/ajouter' => [StagiaireController::class, 'ajouter'],
-    '/stagiaire/modifier/{id}' => [StagiaireController::class, 'modifier'],
+    '/dashboard/stagiaires' => [StagiaireController::class, 'index'],
+    '/stagiaire/ajouter' => [StagiaireController::class, 'create'],
+    '/stagiaire/store' => [StagiaireController::class, 'store'],
+    '/stagiaire/modifier/{id}' => [StagiaireController::class, 'edit'],
+    '/stagiaire/update/{id}' => [StagiaireController::class, 'update'],
     '/stagiaire/supprimer/{id}' => [StagiaireController::class, 'supprimer'],
     
     // Routes pour la gestion des tuteurs
-    '/tuteurs' => [TuteurController::class, 'index'],
-    '/tuteur/ajouter' => [TuteurController::class, 'ajouter'],
-    '/tuteur/modifier/{id}' => [TuteurController::class, 'modifier'],
+    '/dashboard/tuteurs' => [TuteurController::class, 'index'],
+    '/tuteur/ajouter' => [TuteurController::class, 'create'],
+    '/tuteurs/store' => [TuteurController::class, 'store'],
+    '/tuteur/modifier/{id}' => [TuteurController::class, 'edit'],
+    '/tuteurs/update/{id}' => [TuteurController::class, 'update'],
     '/tuteur/supprimer/{id}' => [TuteurController::class, 'supprimer'],
     
     // Routes pour la gestion des tâches

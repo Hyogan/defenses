@@ -63,8 +63,32 @@ class Tuteur extends Model {
     // Obtenir tous les tuteurs
     public static function getAll() {
         $db = Database::getInstance();
-        return $db->fetchAll("SELECT * FROM tuteurs");
+        $sql = "SELECT u.id, u.nom, u.prenom, u.email, t.departement, t.poste, t.experience
+                FROM utilisateurs u
+                JOIN tuteurs t ON u.id = t.utilisateur_id
+                WHERE u.role = 'tuteur'";
+        return $db->fetchAll($sql);
     }
-
+    public static function getById($tuteurId) 
+    {
+      $db = Database::getInstance();
+      $sql = "SELECT utilisateurs.* , tuteurs.* 
+                FROM utilisateurs 
+                JOIN tuteurs 
+                ON utilisateurs.id = tuteurs.utilisateur_id 
+                WHERE tuteurs.id = ?";
+      return $db->fetchAll($sql,[$tuteurId]);
+  }
     
+    public static function getByStagiaire($stagiaireId) 
+    {
+      $db = Database::getInstance();
+      $sql = "SELECT utilisateurs.*, tuteurs.* 
+        FROM utilisateurs 
+        JOIN tuteurs ON utilisateurs.id = tuteurs.utilisateur_id 
+        JOIN affectations ON tuteurs.id = affectations.tuteur_id 
+        WHERE affectations.stagiaire_id = ?";
+      
+      return $db->fetchAll($sql,[$stagiaireId]);
+  }
 }

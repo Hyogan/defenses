@@ -45,6 +45,18 @@ class Model {
         return self::$db->getConnection()->lastInsertId();
     }
 
+    public static function Count() 
+    {
+      $db = Database::getInstance();
+      $table = static::$table;
+      $sql = "SELECT COUNT(*) FROM $table";
+      $stmt = $db->query($sql); 
+      // dd($stmt);
+      $count = $stmt->fetchColumn();
+      return (int) $count; 
+       
+    }
+
     /**
      * Mettre à jour un enregistrement
      */

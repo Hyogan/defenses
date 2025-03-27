@@ -2,10 +2,12 @@
 namespace App\Controllers;
 
 use App\Models\Tache;
+use App\Models\Tuteur;
 use App\Models\User;
 use Core\Controller;
 use App\Models\Stagiaire;
 use App\Models\Auth;
+use App\Models\Evaluation;
 
 class DashboardController extends Controller {
     
@@ -99,10 +101,21 @@ class DashboardController extends Controller {
         if (!Auth::isAdmin()) {
             return $this->redirect('/dashboard');
         }
-        
         // Logic spécifique à l'admin
-        $allUsers = User::getAll(); // Exemple pour récupérer tous les utilisateurs
-        return $this->view('dashboard/admin', ['allUsers' => $allUsers],'admin');
+        $allUsers = User::getAll();
+        $data = [
+          'allUsers' => $allUsers,
+          'userCount' => User::count(),
+          'stagiaireCount' => Stagiaire::count(),
+          'tuteurCount' => Tuteur::count(),
+          'tacheCount' => Tache::count(),
+          'evaluationCount' => Evaluation::count(),
+          'latestStagiaires' => Stagiaire::getAllStagiaires(10),
+          'recentTaches' => Tache::getAllTask(10),
+        ];
+        return $this->view('dashboard/admin', 
+        $data,
+        'admin');
     }
 
     // Méthode pour afficher les stagiaires en retard
