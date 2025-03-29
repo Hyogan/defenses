@@ -65,11 +65,12 @@
             ],
             tuteur: [
                 { title: "Dashboard", icon: "fas fa-tachometer-alt", link: "/tuteur" },
-                { title: "Stagiaires", icon: "fas fa-graduation-cap", link: "interns/tutor" },
-                { title: "Tâches", icon: "fas fa-tasks", link: "tasks/tutor" },
+                { title: "Stagiaires", icon: "fas fa-graduation-cap", link: "tuteur/stagiaires" },
+                { title: "Tâches", icon: "fas fa-tasks", link: "taches/" },
                 { title: "Documents", icon: "fas fa-folder-open", link: "documents/tutor" },
                 { title: "Evaluations", icon: "fas fa-star-half-alt", link: "evaluations/tutor" },
-            ],
+                { title: "Retards", icon: "fas fa-exclamation-triangle", link: "retards" }
+              ],
             stagiaire: [
                 { title: "Dashboard", icon: "fas fa-tachometer-alt", link: "/stagiaire" },
                 { title: "Tâches", icon: "fas fa-tasks", link: "tasks/intern" },
@@ -78,7 +79,6 @@
         };
 
         const role = "<?php echo $_SESSION['user_role']; ?>"; 
-        // console.log(role);
         const menuElement = document.getElementById("menu");
 
         // function loadContent(page) {

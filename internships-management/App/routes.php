@@ -39,6 +39,7 @@ $routes = [
     
     // Routes pour la gestion des tuteurs
     '/dashboard/tuteurs' => [TuteurController::class, 'index'],
+    '/tuteur/stagiaires' => [TuteurController::class, 'stagiaires'],
     '/tuteur/ajouter' => [TuteurController::class, 'create'],
     '/tuteurs/store' => [TuteurController::class, 'store'],
     '/tuteur/modifier/{id}' => [TuteurController::class, 'edit'],

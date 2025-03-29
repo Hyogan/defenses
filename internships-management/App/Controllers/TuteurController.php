@@ -2,10 +2,13 @@
 namespace App\Controllers;
 
 use App\Models\Affectation;
+use App\Models\Auth;
+use App\Models\Evaluation;
 use Core\Controller;
 use App\Models\Tuteur;
 use App\Models\User;
 use App\Models\Stagiaire;
+use App\Models\Tache;
 
 class TuteurController extends Controller{
     // Afficher la liste des tuteurs
@@ -316,5 +319,27 @@ class TuteurController extends Controller{
         }
         
         $this->redirect('/tuteurs/assign?stagiaire_id=' . $stagiaireId);
+    }
+
+
+    public function stagiaires()
+    {
+      if (!Auth::isLoggedIn()) {
+        return $this->redirect('/auth/login');
+    }
+    if (!Auth::isTuteur()) {
+        return $this->redirect('/dashboard');
+    }
+    // $taches = Tache::getByTuteur(Auth::id());
+    // $evaluations = Evaluation::getByTuteur(Auth::id());
+    $stagiaires = Stagiaire::getByTuteurId(Auth::id());
+    // Logic spécifique au tuteur
+    return $this->view('tuteurs/stagiaires', 
+    [
+      // 'taches' => $taches,
+      // 'evaluations' => $evaluations,
+      'stagiaires' => $stagiaires
+    ]
+    , 'admin');
     }
 }

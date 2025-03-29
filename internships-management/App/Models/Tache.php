@@ -29,6 +29,14 @@ class Tache extends Model {
         }
     }
 
+    public static function getByTuteur($tuteurId) 
+    {
+      $db = Database::getInstance();
+      $sql  = "SELECT t.* 
+              FROM taches t WHERE t.tuteur_id = ?";
+        return $db->fetchAll($sql,[$tuteurId]);
+    }
+
 
     // public static function assignTaskToStagiaire($stagiaireId, $taskData) {
     //     // Créer une tâche pour un stagiaire
@@ -106,6 +114,39 @@ class Tache extends Model {
           return $db->fetchAll($sql, [$limit]);
         }
         return $db->fetchAll(sql: $sql);
+    }
+
+    public static function getAllWithDetails()
+    {
+          $db = Database::getInstance();
+          $sql = "SELECT 
+                      t.*,
+                      u_stagiaire.nom AS stagiaire_nom,
+                      u_stagiaire.prenom AS stagiaire_prenom,
+                      u_tuteur.nom AS tuteur_nom,
+                      u_tuteur.prenom AS tuteur_prenom,
+                      u_stagiaire.email AS stagiaire_email,
+                      u_tuteur.email AS tuteur_email
+                  FROM 
+                      taches t
+                  JOIN 
+                      stagiaires st ON t.stagiaire_id = st.id
+                  JOIN 
+                      utilisateurs u_stagiaire ON st.utilisateur_id = u_stagiaire.id
+                  JOIN 
+                      tuteurs tu ON t.tuteur_id = tu.id
+                  JOIN 
+                      utilisateurs u_tuteur ON tu.utilisateur_id = u_tuteur.id";
+  
+          return $db->fetchAll($sql);
+      
+    }
+
+    public static function getLateUnfinished()
+    {
+      $sql = "SELECT * FROM taches WHERE date_limite < NOW() AND statut != 'terminée'";
+      $db = Database::getInstance();
+      return $db->fetchAll($sql);
     }
 
 }

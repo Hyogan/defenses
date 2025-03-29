@@ -16,7 +16,7 @@ class Document extends Model {
         $targetFile = $targetDirectory . $fileName;
 
         if (move_uploaded_file($file['tmp_name'], $targetFile)) {
-            $query = "INSERT INTO documents (nom, chemin, date_creation) VALUES (?, ?, NOW())";
+            $query = "INSERT INTO documents (nom, chemin, date_upload) VALUES (?, ?, NOW())";
             $params = [$fileName, $targetFile];
             return $db->query($query, $params);
         }
@@ -26,7 +26,7 @@ class Document extends Model {
     // Obtenir tous les documents
     public static function getAll() {
         $db = Database::getInstance();
-        return $db->fetchAll("SELECT * FROM documents ORDER BY date_creation DESC");
+        return $db->fetchAll("SELECT * FROM documents ORDER BY date_upload DESC");
     }
 
     // Supprimer un document

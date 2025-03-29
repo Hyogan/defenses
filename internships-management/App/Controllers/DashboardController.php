@@ -20,6 +20,7 @@ class DashboardController extends Controller {
         
         // Redirect based on role
         // dd(Auth::isStagiaire());
+        // dd(Auth::getUserType());
         if (Auth::isAdmin()) {
             return $this->redirect('/dashboard/admin');
         } elseif (Auth::isSuperviseur()) {
@@ -58,15 +59,20 @@ class DashboardController extends Controller {
         if (!Auth::isLoggedIn()) {
             return $this->redirect('/auth/login');
         }
-        
         if (!Auth::isTuteur()) {
             return $this->redirect('/dashboard');
         }
-        
+        $taches = Tache::getByTuteur(Auth::id());
+        $evaluations = Evaluation::getByTuteur(Auth::id());
+        $stagiaires = Stagiaire::getByTuteurId(Auth::id());
         // Logic spécifique au tuteur
         $tachesAssignées = [];// récupérer les tâches assignées au tuteur
         return $this->view('dashboard/tuteur', 
-        ['tachesAssignées' => $tachesAssignées]
+        [
+          'taches' => $taches,
+          'evaluations' => $evaluations,
+          'stagiaires' => $stagiaires
+        ]
         , 'admin');
     }
 
@@ -123,7 +129,6 @@ class DashboardController extends Controller {
         if (!Auth::isLoggedIn()) {
             return $this->redirect('/auth/login');
         }
-        
         // Vérification du rôle de l'utilisateur (admin, superviseur, tuteur)
         $user = User::getById($_SESSION['user_id']);
         
