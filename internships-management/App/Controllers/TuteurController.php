@@ -1,6 +1,7 @@
 <?php 
 namespace App\Controllers;
 
+use App\Models\Affectation;
 use Core\Controller;
 use App\Models\Tuteur;
 use App\Models\User;
@@ -198,7 +199,82 @@ class TuteurController extends Controller{
       return $this->view("tuteurs/show", ['tuteur' => $tuteur], "admin");
     }
 
-    // Affectation d'un tuteur à un stagiaire
+    /**
+     * Affiche la page d'assignation des tuteurs aux stagiaires
+     */
+    public function assignView() {
+        // Récupérer tous les stagiaires
+        $stagiaires = Stagiaire::getAllStagiaires();
+        // Récupérer tous les tuteurs
+        $tuteurs = Tuteur::getAll();
+        // Récupérer le stagiaire sélectionné si présent
+        $selectedStagiaire = null;
+        $assignedTuteurs = [];
+        
+        if (isset($_GET['stagiaire_id']) && !empty($_GET['stagiaire_id'])) {
+            $stagiaireId = $_GET['stagiaire_id'];
+            $selectedStagiaire = Stagiaire::getById($stagiaireId);
+            // Récupérer les tuteurs déjà assignés à ce stagiaire
+            $assignedTuteurs = Tuteur::getByStagiaire($stagiaireId);
+        }
+        
+        // Préparer les données pour la vue
+        $data = [
+            'stagiaires' => $stagiaires,
+            'tuteurs' => $tuteurs,
+            'selectedStagiaire' => $selectedStagiaire,
+            'assignedTuteurs' => $assignedTuteurs
+        ];
+        
+        // Afficher la vue
+        return $this->view('affectations/create', $data, 'admin');
+    }
+    
+    /**
+     * Traite la soumission du formulaire d'assignation
+     */
+    public function assignProcess() {
+        // Vérifier si le formulaire a été soumis
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            $this->redirect('/tuteurs/assign');
+            return;
+        }
+        
+        $stagiaireId = $_POST['stagiaire_id'] ?? null;
+        $tuteurIds = $_POST['tuteur_ids'] ?? [];
+        $replaceExisting = isset($_POST['replace_existing']);
+        
+        if (!$stagiaireId) {
+            $_SESSION['error'] = 'Aucun stagiaire sélectionné.';
+            $this->redirect('/tuteurs/assign');
+            return;
+        }
+        try {
+            // Si on remplace les assignations existantes, supprimer les anciennes
+            if ($replaceExisting) {
+                Tuteur::removeAllAssignments($stagiaireId);
+            }
+            
+            // Ajouter les nouvelles assignations
+            foreach ($tuteurIds as $tuteurId) {
+                // Vérifier si cette assignation existe déjà
+                if (!Affectation::getByStagiareAndTuteur($stagiaireId, $tuteurId)) {
+                    Affectation::add($stagiaireId, $tuteurId);
+                }
+            }
+            
+            $_SESSION['success'] = 'Les tuteurs ont été assignés avec succès.';
+        } catch (\Exception $e) {
+            $_SESSION['error'] = 'Erreur lors de l\'assignation des tuteurs: ' . $e->getMessage();
+        }
+        
+        // Rediriger vers la page d'assignation
+        $this->redirect('/tuteurs/assign?stagiaire_id=' . $stagiaireId);
+    }
+    
+    /**
+     * Affectation d'un tuteur à un stagiaire (méthode originale maintenue pour compatibilité)
+     */
     public function assign($stagiaireId) {
       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $tuteurIds = $_POST['tuteurs'];
@@ -226,5 +302,19 @@ class TuteurController extends Controller{
         'stagiaire' => $stagiaire,
         'assignedTuteurs' => $assignedTuteurs
       ], "admin");
+    }
+    
+    /**
+     * Supprimer l'assignation d'un tuteur à un stagiaire
+     */
+    public function removeAssignment($stagiaireId, $tuteurId) {
+        try {
+            Tuteur::removeAssignment($stagiaireId, $tuteurId);
+            $_SESSION['success'] = "L'assignation a été supprimée avec succès";
+        } catch (\Exception $e) {
+            $_SESSION['error'] = "Erreur lors de la suppression de l'assignation: " . $e->getMessage();
+        }
+        
+        $this->redirect('/tuteurs/assign?stagiaire_id=' . $stagiaireId);
     }
 }

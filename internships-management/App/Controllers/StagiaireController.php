@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\Stagiaire;
+use App\Models\Tuteur;
+use App\Models\Affectation;
 use Core\Controller;
 use App\Models\User;
 
@@ -161,7 +163,94 @@ class StagiaireController extends Controller {
     public function show($userId) {
         $user = User::getById($userId);
         $tasks = Stagiaire::getTaskHistory($user['stagiaire']['id']);
-        require_once('views/stagiaires/show.php');
+        return $this->view("stagiaires/show", ['user' => $user, 'tasks' => $tasks], "admin");
     }
 
+    public function affectations() 
+    {
+      $affectations  = Affectation::getAllWithDetails();
+      // dd($stagiairesTuteurs);
+      return $this->view("stagiaires/affectations", 
+      ["affectations" => $affectations],
+      "admin");
+    }
+
+    /**
+     * Affiche la page d'assignation des tuteurs à un stagiaire spécifique
+     */
+    public function assignTuteurs($stagiaireId) {
+        // Récupérer les informations du stagiaire
+        $stagiaire = Stagiaire::getById($stagiaireId);
+        
+        if (!$stagiaire) {
+            flash("error", "Stagiaire non trouvé.");
+            return $this->redirect("/dashboard/stagiaires");
+        }
+        
+        // Récupérer tous les tuteurs disponibles
+        $tuteurs = Tuteur::getAll();
+        // Récupérer les tuteurs déjà assignés à ce stagiaire
+        $assignedTuteurs = Tuteur::getByStagiaire($stagiaireId);
+        
+        // Préparer les IDs des tuteurs assignés pour faciliter la vérification dans la vue
+        $assignedTuteurIds = [];
+        foreach ($assignedTuteurs as $tuteur) {
+            $assignedTuteurIds[] = $tuteur['id'];
+        }
+        // dd($assignedTuteurIds);
+        $pageTitle = 'Assigner des tuteurs';
+        return $this->view("stagiaires/assign_tuteurs", [
+            'stagiaire' => $stagiaire,
+            'tuteurs' => $tuteurs,
+            'pageTitle' => $pageTitle,
+            'assignedTuteurs' => $assignedTuteurs,
+            'assignedTuteurIds' => $assignedTuteurIds
+        ], "admin");
+    }
+    
+    /**
+     * Traite la soumission du formulaire d'assignation des tuteurs
+     */
+    public function processAssignTuteurs($stagiaireId) {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            return $this->redirect("/stagiaire/assign-tuteurs/{$stagiaireId}");
+        }
+        
+        $tuteurIds = $_POST['tuteur_ids'] ?? [];
+        $replaceExisting = isset($_POST['replace_existing']) && $_POST['replace_existing'] == '1';
+        
+        try {
+            // Si on remplace les assignations existantes, supprimer les anciennes
+            if ($replaceExisting) {
+                Tuteur::removeAllAssignments($stagiaireId);
+            }
+            
+            // Ajouter les nouvelles assignations
+            foreach ($tuteurIds as $tuteurId) {
+                if (!Affectation::getByStagiareAndTuteur($stagiaireId, $tuteurId)) {
+                    Affectation::add($stagiaireId, $tuteurId);
+                }
+            }
+            
+            flash("success", "Les tuteurs ont été assignés avec succès.");
+        } catch (\Exception $e) {
+            flash("error", "Erreur lors de l'assignation des tuteurs: " . $e->getMessage());
+        }
+        
+        return $this->redirect("/stagiaire/assign-tuteurs/{$stagiaireId}");
+    }
+    
+    /**
+     * Supprime l'assignation d'un tuteur à un stagiaire
+     */
+    public function removeTuteur($stagiaireId, $tuteurId) {
+        try {
+            Tuteur::removeAssignment($stagiaireId, $tuteurId);
+            flash("success", "Le tuteur a été retiré avec succès.");
+        } catch (\Exception $e) {
+            flash("error", "Erreur lors du retrait du tuteur: " . $e->getMessage());
+        }
+        
+        return $this->redirect("/stagiaire/assign-tuteurs/{$stagiaireId}");
+    }
 }

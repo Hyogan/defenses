@@ -1,5 +1,6 @@
 <div class="container mt-5">
     <h2>Liste des Tuteurs</h2>
+    <a href="/tuteur/ajouter" class="btn btn-primary">Ajouter un Tuteur</a>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -27,6 +28,5 @@
             <?php endforeach; ?>
         </tbody>
     </table>
-    <a href="/tuteur/ajouter" class="btn btn-primary">Ajouter un Tuteur</a>
 </div>
 

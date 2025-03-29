@@ -49,7 +49,7 @@
                 // { title: "Utilisateurs", icon: "fas fa-users", link: "user/management" },
                 { title: "Stagiaires", icon: "fas fa-graduation-cap", link: "dashboard/stagiaires" },
                 { title: "Tuteurs", icon: "fas fa-user-tie", link: "dashboard/tuteurs" },
-                { title: "Affectations", icon: "fas fa-link", link: "assignments" },
+                { title: "Affectations", icon: "fas fa-link", link: "dashboard/affectations" },
                 { title: "Tâches", icon: "fas fa-tasks", link: "tasks" },
                 { title: "Documents", icon: "fas fa-folder-open", link: "documents" },
                 { title: "Evaluations", icon: "fas fa-star-half-alt", link: "evaluations" },

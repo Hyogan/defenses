@@ -86,6 +86,9 @@ class Stagiaire extends Model {
       // $stmt->execute([$tuteurId]);
       // return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
+  /**
+   * Récupérer un stagiaire par ID
+   */
   public static function getById($stagiaireId)
    {
       $sql = "SELECT stagiaires.*, utilisateurs.* 
@@ -93,6 +96,6 @@ class Stagiaire extends Model {
               JOIN utilisateurs ON stagiaires.utilisateur_id = utilisateurs.id 
               WHERE stagiaires.id = ?";
       $db = Database::getInstance();
-      return $db->fetchAll($sql);
+      return $db->fetchAll($sql, [$stagiaireId]);
   }
 }
