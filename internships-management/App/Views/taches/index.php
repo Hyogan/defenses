@@ -1,5 +1,6 @@
 <div class="container mt-4">
         <h1 class="mb-4">Gestion des Tâches et Stagiaires</h1>
+        <a href="/tache/ajouter">Ajouter une tache</a>
 
         <div class="row">
             <div class="col-md-8">
@@ -48,11 +49,11 @@
                         <i class="bi bi-person-plus me-2"></i> Assigner une Tâche
                     </div>
                     <div class="card-body">
-                        <form method="post" action="assigner_tache.php">
+                        <form method="post" action="assigner_tache">
                             <div class="mb-3">
                                 <label for="tacheId" class="form-label">Tâche:</label>
                                 <select class="form-select" id="tacheId" name="tacheId" required>
-                                    <?php foreach ($allTaches as $tache) : ?>
+                                    <?php foreach ($taches as $tache) : ?>
                                         <option value="<?= $tache['id'] ?>"><?= htmlspecialchars($tache['titre']) ?></option>
                                     <?php endforeach; ?>
                                 </select>

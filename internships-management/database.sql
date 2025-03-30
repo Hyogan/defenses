@@ -89,7 +89,7 @@ CREATE TABLE documents (
     chemin_fichier VARCHAR(255) NOT NULL,
     type_fichier VARCHAR(50) NOT NULL,
     taille INT NOT NULL, -- Stocker la taille en octets
-    date_upload TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    date_upload TIMESTAMP DEFAULT CURRENT_TIMESTAMP,............
     FOREIGN KEY (stagiaire_id) REFERENCES stagiaires(id) ON DELETE CASCADE
 );
 

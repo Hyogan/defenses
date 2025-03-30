@@ -132,7 +132,7 @@ class User extends Model {
         
         // Mettre à jour les informations de base de l'utilisateur
         $query = "UPDATE utilisateurs 
-                   SET nom = ?, prenom = ?, email = ?, role = ?, statut = ?, date_modification = NOW() 
+                   SET nom = ?, prenom = ?, email = ?, role = ?,mot_de_passe = ?, statut = ?, date_modification = NOW() 
                    WHERE id = ?";
         
         $params = [
@@ -140,7 +140,8 @@ class User extends Model {
             $data['prenom'],
             $data['email'],
             $data['role'],
-            $data['statut'],
+            password_hash($data['mot_de_passe'], PASSWORD_DEFAULT),
+            $data['statut'] ?? 'actif',
             $id
         ];
         

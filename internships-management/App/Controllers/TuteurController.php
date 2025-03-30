@@ -15,6 +15,7 @@ class TuteurController extends Controller{
     public function index() 
     {
       $tuteurs = Tuteur::getAll();
+      // dd($tuteurs);
       return $this->view('tuteurs/index',['tuteurs' => $tuteurs],'admin');
     }
 
@@ -73,7 +74,7 @@ class TuteurController extends Controller{
         
         // S'il y a des erreurs, on les affiche
         if (!empty($errors)) {
-          return $this->view("tuteurs/create", [
+          return $this->view("tuteurs/edit", [
             'errors' => $errors,
             'data' => $data
           ], "admin");
@@ -97,14 +98,14 @@ class TuteurController extends Controller{
       }
       
       // Si ce n'est pas une requête POST, on redirige vers le formulaire
-      header("Location: /tuteurs/create");
-      exit;
+     $this->redirect("/tuteur/create");
     }
 
     // Afficher le formulaire de modification
     public function edit($id) {
-      $tuteur = User::getById($id);
+      $tuteur = Tuteur::getById($id);
       // dd($tuteur);
+      $tuteur = User::getById($tuteur[0]['utilisateur_id']);
       if (!$tuteur) {
         $_SESSION['error'] = "Ce tuteur n'existe pas";
         $this->redirect("/dashboard/tuteurs");
@@ -118,11 +119,12 @@ class TuteurController extends Controller{
       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $data = $_POST;
         $errors = [];
+        // dd($tuteur);
         $tuteur = User::getById($id);
-      
+        // dd($tuteur);
         if (!$tuteur) {
           $_SESSION['error'] = "Ce tuteur n'existe pas";
-          $this->redirect("dashboard/tuteurs");
+          $this->redirect(url: "/dashboard/tuteurs");
         }
         
         // Validation des données
@@ -159,7 +161,8 @@ class TuteurController extends Controller{
         if (!empty($errors)) {
           return $this->view("tuteurs/edit", [
             'errors' => $errors,
-            'tuteur' => (object) array_merge((array) $tuteur, $data)
+            'tuteur' => $tuteur,  
+            'data' => $data
           ], "admin");
         }
         
@@ -332,7 +335,9 @@ class TuteurController extends Controller{
     }
     // $taches = Tache::getByTuteur(Auth::id());
     // $evaluations = Evaluation::getByTuteur(Auth::id());
-    $stagiaires = Stagiaire::getByTuteurId(Auth::id());
+    $tuteur = Tuteur::getByUserId(Auth::id());
+    // dd($tuteur);
+    $stagiaires = Stagiaire::getByTuteurId($tuteur['id']);
     // Logic spécifique au tuteur
     return $this->view('tuteurs/stagiaires', 
     [

@@ -72,14 +72,26 @@ class Tache extends Model {
     // Assigner une tâche à un stagiaire
     public static function assignTaskToStagiaire($stagiaireId, $data) {
         $db = Database::getInstance();
-        $query = "INSERT INTO taches (stagiaire_id, titre, description, date_limite, statut) 
-                  VALUES (?, ?, ?, ?, ?)";
+        $query = "INSERT INTO taches (
+                  stagiaire_id,
+                  tuteur_id, 
+                  titre, 
+                  description, 
+                  date_limite, 
+                  statut,
+                  ancien_pourcentage,
+                  nouveau_pourcentage
+                  ) 
+                  VALUES (?, ?, ?,?, ?, ?,?,?)";
         $params = [
             $stagiaireId,
+            $data['tuteur_id'],
             $data['titre'],
             $data['description'],
             $data['date_limite'],
-            'en cours' // Statut initial
+            'en attente',
+            0,0
+
         ];
         return $db->query($query, $params);
     }

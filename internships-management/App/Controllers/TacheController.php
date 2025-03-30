@@ -1,6 +1,7 @@
 <?php 
 namespace App\Controllers;
 
+use App\Models\Auth;
 use Core\Controller;
 use App\Models\Task;
 use App\Models\Stagiaire;
@@ -15,11 +16,10 @@ class TacheController extends Controller{
             $data = $_POST;
             // Valider et affecter la tâche
             Tache::assignTaskToStagiaire($stagiaireId, $data);
-            // Rediriger ou afficher un message
-            header("Location: /stagiaires/{$stagiaireId}/tasks");
+            return $this->redirect("/stagiaires/{$stagiaireId}/tasks");
         }
         // Afficher le formulaire d'affectation de tâche
-        require_once('views/missions/assign.php');
+        return $this->redirect('taches/');
     }
 
     // Mise à jour du statut d'une tâche
@@ -45,37 +45,82 @@ class TacheController extends Controller{
     // Afficher la liste des tâches
     public function index() {
         $taches = Tache::getAllWithDetails();
-        $this->view('taches/index', ['taches' => $taches],"admin");
+        $role = Auth::getUserType();
+        $tuteur = ($role == 'tuteur' ?  Tuteur::getByUserId(Auth::id()) : null);
+        $tuteur_id = $tuteur['id'];
+        $stagiaires = $role == 'tuteur'
+                            ? $stagiaires = Stagiaire::getByTuteurId(tuteurId: $tuteur_id)
+                            : $stagiaires = Stagiaire::getAllStagiaires();
+        // dd($taches);
+        $this->view('taches/index', 
+        ['taches' => $taches,'stagiaires' => $stagiaires],
+        "admin");
+    }
+
+    public function create() 
+    {
+        $role = Auth::getUserType();
+        $tuteurs = Tuteur::getAll();
+        $role = Auth::getUserType();
+        $tuteur = ($role == 'tuteur' ?  Tuteur::getByUserId(Auth::id()) : null);
+        $tuteur_id = $tuteur['id'];
+        $stagiaires = $role == 'tuteur'
+                            ? $stagiaires = Stagiaire::getByTuteurId(tuteurId: $tuteur_id)
+                            : $stagiaires = Stagiaire::getAllStagiaires();
+        // dd($tuteur);
+        return $this->view('taches/create',[
+          'stagiaires' => $stagiaires,
+          'tuteurs' => $tuteurs,
+          'role' => $role,
+          'tuteur_id' => $tuteur_id
+        ],'admin');
     }
     
     // Afficher le formulaire de création d'une tâche
-    public function create() {
-        // Récupérer la liste des stagiaires pour le formulaire
-        $stagiaires = Stagiaire::getAllStagiaires();
-        $tuteurs = Tuteur::getAll();
-        
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $data = [
-                'titre' => $_POST['titre'],
-                'description' => $_POST['description'],
-                'stagiaire_id' => $_POST['stagiaire_id'],
-                'tuteur_id' => $_POST['tuteur_id'] ?? 0,
-                'date_limite' => $_POST['date_echeance'],
-                'statut' => 'en cours',
-                'pourcentage' => 0
-            ];
-            
-            // Créer la tâche
-            $tacheId = Tache::assignTaskToStagiaire($data['stagiaire_id'], $data);
-            
-            if ($tacheId) {
-                $this->redirect('/taches');
-            }
-        }
-        
-        $this->view('taches/create', ['stagiaires' => $stagiaires]);
-    }
-    
+    public function store() {
+      // Récupérer la liste des stagiaires pour le formulaire
+      $stagiaires = Stagiaire::getAllStagiaires();
+      $tuteurs = Tuteur::getAll();
+      $role = Auth::getUserType();
+      $tuteur_id = $role == 'tuteur' ?  Tuteur::getByUserId(Auth::id()) : null;
+      if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+          $data = [
+              'titre' => $_POST['titre'],
+              'description' => $_POST['description'],
+              'stagiaire_id' => $_POST['stagiaire_id'],
+              'tuteur_id' => $_POST['tuteur_id'] ?? 0,
+              'date_limite' => $_POST['date_limite'],
+              'statut' => 'en cours',
+              'pourcentage' => 0
+          ];
+          // dd($data);
+          // Validation des données (comme précédemment)
+          $erreurs = [];
+          foreach ($data as $key => $valeur) {
+              if (empty($valeur) && $key != 'pourcentage') {
+                  $erreurs[] = "Le champ '$key' est obligatoire.";
+              }
+          }
+  
+          if (!empty($erreurs)) {
+              return $this->view("taches/create",
+                  [
+                      "erreurs" => $erreurs,
+                      'stagiaires' => $stagiaires,
+                      'tuteurs' => $tuteurs,
+                      'role' => $role,
+                      'tuteur_id' => $tuteur_id
+                  ], "admin"
+              );
+          }
+          // Créer la tâche
+          $tacheId = Tache::assignTaskToStagiaire($data['stagiaire_id'], $data);
+          if ($tacheId) {
+              $this->redirect('/taches');
+          }
+      }
+      $this->view('taches/create', ['stagiaires' => $stagiaires, 'tuteurs' => $tuteurs]);
+  }
     // Afficher le formulaire d'édition d'une tâche
     public function edit($id) {
         $tache = Tache::getById($id);

@@ -13,7 +13,7 @@
                             </ul>
                         </div>
                     <?php endif; ?>
-                    <form action="/tuteurs/update/<?= $tuteur["id"] ?>" method="POST">
+                    <form action="/tuteurs/update/<?= $tuteur["tuteur"]["utilisateur_id"] ?>" method="POST">
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="nom" class="form-label">Nom</label>

@@ -55,7 +55,7 @@ class Auth {
    
     public static function id() 
     {
-      return $_SESSION['user_id'] ?? null;
+      return $_SESSION['user_id'] ?? null ;
     }
    /**
     * Déconnecter l'utilisateur

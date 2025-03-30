@@ -49,7 +49,8 @@ $routes = [
     
     // Routes pour la gestion des tâches
     '/taches' => [TacheController::class, 'index'],
-    '/tache/ajouter' => [TacheController::class, 'ajouter'],
+    '/tache/ajouter' => [TacheController::class, 'create'],
+    '/tache/store' => [TacheController::class, 'store'],
     '/tache/modifier/{id}' => [TacheController::class, 'modifier'],
     '/tache/supprimer/{id}' => [TacheController::class, 'supprimer'],
     
