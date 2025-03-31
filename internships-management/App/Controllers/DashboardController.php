@@ -87,7 +87,8 @@ class DashboardController extends Controller {
         }
         
         $stagiaireId = Stagiaire::getByUserId(Auth::id()); 
-        $tachesEnCours = Tache::getByStagiaire($stagiaireId);// récupérer les tâches en cours du stagiaire
+        // dd($stagiaireId);
+        $tachesEnCours = Tache::getByStagiaire($stagiaireId['id']);// récupérer les tâches en cours du stagiaire
         return $this->view(
           'dashboard/stagiaire',
           [

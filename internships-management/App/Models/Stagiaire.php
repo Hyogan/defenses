@@ -98,4 +98,69 @@ class Stagiaire extends Model {
       $db = Database::getInstance();
       return $db->fetchAll($sql, [$stagiaireId]);
   }
+
+  public static function getAllWithDetails($stagiaireId)
+  {
+    $sql = "SELECT
+    s.*,
+    u.nom AS nom_stagiaire,
+    u.prenom AS prenom_stagiaire,
+    u.email AS email_stagiaire,
+    t.id AS tuteur_id,
+    t.departement AS departement_tuteur,
+    t.poste AS poste_tuteur,
+    t.experience AS experience_tuteur,
+    ut.nom AS nom_tuteur,
+    ut.prenom AS prenom_tuteur,
+    ut.email AS email_tuteur,
+    ta.*,
+    d.*,
+    e.*
+FROM stagiaires s
+JOIN utilisateurs u ON s.utilisateur_id = u.id
+LEFT JOIN affectations a ON s.id = a.stagiaire_id
+LEFT JOIN tuteurs t ON a.tuteur_id = t.id
+LEFT JOIN utilisateurs ut ON t.utilisateur_id = ut.id
+LEFT JOIN taches ta ON s.id = ta.stagiaire_id
+LEFT JOIN documents d ON s.id = d.stagiaire_id
+LEFT JOIN evaluations e ON s.id = e.stagiaire_id
+WHERE s.id = ?";
+$db = Database::getInstance();
+$results = $db->fetchAll($sql, [$stagiaireId]);
+
+if (empty($results)) {
+    return null;
+}
+
+$stagiaire = $results[0]; // Informations de base du stagiaire
+
+// Initialisation des tableaux pour les tâches, documents et évaluations
+$stagiaire['taches'] = [];
+$stagiaire['documents'] = [];
+$stagiaire['evaluations'] = [];
+
+foreach ($results as $row) {
+    if ($row['titre']) { // Vérification pour les tâches
+        $stagiaire['taches'][] = $row;
+    }
+    if ($row['nom_fichier']) { // Vérification pour les documents
+        $stagiaire['documents'][] = $row;
+    }
+    if ($row['note']) { // Vérification pour les évaluations
+        $stagiaire['evaluations'][] = $row;
+    }
+}
+
+// Nettoyer les données redondantes de la première ligne
+unset($stagiaire['id']);
+unset($stagiaire['utilisateur_id']);
+unset($stagiaire['formation']);
+unset($stagiaire['date_debut']);
+unset($stagiaire['date_fin']);
+unset($stagiaire['date_creation']);
+
+
+    return $stagiaire;
+  }
+    
 }

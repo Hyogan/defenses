@@ -1,6 +1,6 @@
 <div class="container mt-5">
     <h2>Liste des Stagiaires et Tuteurs</h2>
-    <a class="btn btn-primary" href="/tuteurs/assign">Assigner</a>
+    <!-- <a class="btn btn-primary" href="/tuteurs/assign">Assigner</a> -->
     <table class="table table-striped">
         <thead>
             <tr>

@@ -84,7 +84,10 @@ class StagiaireController extends Controller {
 
     // Mise à jour des informations d'un stagiaire
     public function edit($userId) {
-        $stagiaire = User::getById($userId);
+      // $stagiaire = Stagiaire::getByUserId($userId);
+      // dd($stagiaire);
+      $stagiaire = User::getById($userId);
+        // dd($stagiaire);
         $stagiaire["formation"] = $stagiaire["stagiaire"]["formation"];
         $stagiaire["date_debut"] = $stagiaire["stagiaire"]["date_debut"];
         $stagiaire["date_fin"] = $stagiaire["stagiaire"]["date_fin"];
@@ -162,8 +165,11 @@ class StagiaireController extends Controller {
     // Afficher les détails d'un stagiaire
     public function show($userId) {
         $user = User::getById($userId);
-        $tasks = Stagiaire::getTaskHistory($user['stagiaire']['id']);
-        return $this->view("stagiaires/show", ['user' => $user, 'tasks' => $tasks], "admin");
+        $stagiaire = Stagiaire::getAllWithDetails($user['stagiaire']['id']);
+        // dd($stagiaire);
+        return $this->view("stagiaires/show",
+         ['stagiaire' => $stagiaire], 
+         "admin");
     }
 
     public function affectations() 

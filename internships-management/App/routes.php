@@ -32,6 +32,7 @@ $routes = [
     '/stagiaire/store' => [StagiaireController::class, 'store'],
     '/stagiaire/modifier/{id}' => [StagiaireController::class, 'edit'],
     '/stagiaire/update/{id}' => [StagiaireController::class, 'update'],
+    '/stagiaire/show/{userId}' => [StagiaireController::class, 'show'],
     '/stagiaire/supprimer/{id}' => [StagiaireController::class, 'supprimer'],
     '/stagiaire/assign-tuteurs/{id}' => [StagiaireController::class, 'assignTuteurs'],
     '/stagiaire/process-assign-tuteurs/{id}' => [StagiaireController::class, 'processAssignTuteurs'],
