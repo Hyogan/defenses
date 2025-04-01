@@ -17,7 +17,9 @@ CREATE TABLE lignes (
 CREATE TABLE utilisateurs (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(255),
+    prenom VARCHAR(255),
     email VARCHAR(255) UNIQUE,
+    statut ENUM('actif','inactif') DEFAULT 'actif',
     mot_de_passe VARCHAR(255),
     role ENUM('admin', 'classic') DEFAULT 'classic'
 );
@@ -29,4 +31,4 @@ CREATE TABLE logs (
   message VARCHAR(255),
   id_utilisateur INT,
   FOREIGN KEY (id_utilisateur) REFERENCES utilisateurs(id)
-)
+);

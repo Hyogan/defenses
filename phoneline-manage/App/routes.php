@@ -22,6 +22,7 @@ $routes = [
 
     '/lignes' => [LignesController::class, 'liste'],
     '/lignes/ajouter' => [LignesController::class, 'ajouter'],
+    '/lignes/store' => [LignesController::class, 'store'],
     '/lignes/modifier' => [LignesController::class, 'modifier'],
     '/lignes/supprimer' => [LignesController::class, 'supprimer'],
     '/lignes/details' => [LignesController::class, 'details'],

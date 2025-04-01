@@ -2,12 +2,9 @@
 namespace App\Controllers;
 
 use Core\Controller;
-use App\Models\User;
 use App\Models\Auth;
-use App\Views\View;
 
 class AuthController extends Controller{
-
     public function login() {
         if (Auth::isLoggedIn()) {
             $this->redirect('/dashboard');
@@ -48,7 +45,7 @@ class AuthController extends Controller{
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = $_POST['email'] ?? '';
             $password = $_POST['password'] ?? '';
-            $remember = isset($_POST['remember']) ? true : false;
+        -    $remember = isset($_POST['remember']) ? true : false;
             $errors = [];
             
             if (empty($email)) {
@@ -170,29 +167,4 @@ class AuthController extends Controller{
         $this->redirect('/auth/login');
         exit;
     }
-
-
-
-
-    public function redirectToDashboard() {
-        if (!Auth::isLoggedIn()) {
-            header('Location: ' . APP_URL . '/auth/login');
-            exit;
-        }
-        
-        if (Auth::isAdmin()) {
-            header('Location: ' . APP_URL . '/dashboard/admin');
-        } elseif (Auth::isStagiaire()) {
-            header('Location: ' . APP_URL . '/dashboard/stagiaire');
-        } elseif (Auth::isTuteur()) {
-            header('Location: ' . APP_URL . '/dashboard/tuteur');
-        } else {
-            header('Location: ' . APP_URL);
-        }
-        
-        exit;
-    }
-
-
-    
 }

@@ -51,7 +51,6 @@ class Model {
       $table = static::$table;
       $sql = "SELECT COUNT(*) FROM $table";
       $stmt = $db->query($sql); 
-      // dd($stmt);
       $count = $stmt->fetchColumn();
       return (int) $count; 
        

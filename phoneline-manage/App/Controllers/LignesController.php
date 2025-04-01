@@ -1,58 +1,63 @@
 <?php
-
-include 'models/Ligne.php';
-
-class LignesController {
-    public function ajouter() {
+use App\Models\Ligne;
+use Core\Controller;
+class LignesController extends Controller{
+  public function ajouter()
+  {
+    return $this->view('lignes/ajouter',[],'admin');
+  }
+    public function store() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $ligne = new Ligne();
-            $ligne->type_ligne = $_POST['type_ligne'];
-            $ligne->numero_ligne = $_POST['numero_ligne'];
-            $ligne->marque_poste = $_POST['marque_poste'];
-            $ligne->nom_proprietaire = $_POST['nom_proprietaire'];
-            $ligne->numero_port = $_POST['numero_port'];
-            $ligne->numero_bandeau = $_POST['numero_bandeau'];
-            $ligne->numero_fusible = $_POST['numero_fusible'];
-            $ligne->numero_jarretiere = $_POST['numero_jarretiere'];
-            $ligne->ajouter();
-            header('Location: index.php?action=liste');
-            exit;
-        }
-        include 'views/lignes/ajouter.php';
+            $ligne = [];
+            $ligne['type_ligne'] = $_POST['type_ligne'];
+            $ligne['numero_ligne'] = $_POST['numero_ligne'];
+            $ligne['marque_poste'] = $_POST['marque_poste'];
+            $ligne['nom_proprietaire'] = $_POST['nom_proprietaire'];
+            $ligne['numero_port'] = $_POST['numero_port'];
+            $ligne['numero_bandeau'] = $_POST['numero_bandeau'];
+            $ligne['numero_fusible'] = $_POST['numero_fusible'];
+            $ligne['numero_jarretiere'] = $_POST['numero_jarretiere'];
+            Ligne::create($ligne);
+            $this->redirect('/dashboard');
+          }
     }
-
     public function modifier($id) {
-        $ligne = new Ligne($id);
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $ligne->type_ligne = $_POST['type_ligne'];
-            $ligne->numero_ligne = $_POST['numero_ligne'];
-            $ligne->marque_poste = $_POST['marque_poste'];
-            $ligne->nom_proprietaire = $_POST['nom_proprietaire'];
-            $ligne->numero_port = $_POST['numero_port'];
-            $ligne->numero_bandeau = $_POST['numero_bandeau'];
-            $ligne->numero_fusible = $_POST['numero_fusible'];
-            $ligne->numero_jarretiere = $_POST['numero_jarretiere'];
-            $ligne->modifier();
-            header('Location: index.php?action=liste');
-            exit;
-        }
-        include 'views/lignes/modifier.php';
-    }
+      if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $ligne = [];
+        $ligne['type_ligne'] = $_POST['type_ligne'];
+        $ligne['numero_ligne'] = $_POST['numero_ligne'];
+        $ligne['marque_poste'] = $_POST['marque_poste'];
+        $ligne['nom_proprietaire'] = $_POST['nom_proprietaire'];
+        $ligne['numero_port'] = $_POST['numero_port'];
+        $ligne['numero_bandeau'] = $_POST['numero_bandeau'];
+        $ligne['numero_fusible'] = $_POST['numero_fusible'];
+        $ligne['numero_jarretiere'] = $_POST['numero_jarretiere'];
+        Ligne::update($id,$ligne);
+        $this->redirect('/dashboard');
+      }
+}
 
     public function supprimer($id) {
-        $ligne = new Ligne($id);
-        $ligne->supprimer();
-        header('Location: index.php?action=liste');
-        exit;
+      $ligne = Ligne::getById($id);
+      if(!$ligne) {
+        flash('error','la ligne choisie n\'existe pas ');
+        return $this->redirect('/lignes');
+      }
+      Ligne::delete($id);
+      return $this->redirect('/lignes');
     }
 
     public function liste() {
-        $lignes = Ligne::tous();
-        include 'views/lignes/liste.php';
+        $lignes = Ligne::all();
+        return $this->view('lignes/liste',['lignes' => $lignes],'admin');
     }
-
-    public function details($id) {
-        $ligne = new Ligne($id);
-        include 'views/lignes/details.php';
+    public function details($id)
+     {
+      $ligne = Ligne::getById($id);
+      if(!$ligne) {
+        flash('error','la ligne choisie n\'existe pas ');
+        return $this->redirect('/lignes');
+      }
+      return $this->view('/lignes/details',['ligne' => $ligne],'admin');
     }
 }

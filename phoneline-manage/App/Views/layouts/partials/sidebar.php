@@ -46,47 +46,38 @@
         const menuData = {
             admin: [
                 { title: "Dashboard", icon: "fas fa-tachometer-alt", link: "dashboard/admin" },
-                // { title: "Utilisateurs", icon: "fas fa-users", link: "user/management" },
-                { title: "Stagiaires", icon: "fas fa-graduation-cap", link: "dashboard/stagiaires" },
-                { title: "Tuteurs", icon: "fas fa-user-tie", link: "dashboard/tuteurs" },
-                { title: "Affectations", icon: "fas fa-link", link: "dashboard/affectations" },
-                { title: "Tâches", icon: "fas fa-tasks", link: "taches" },
-                { title: "Documents", icon: "fas fa-folder-open", link: "documents" },
-                { title: "Evaluations", icon: "fas fa-star-half-alt", link: "evaluations" },
-                { title: "Retards", icon: "fas fa-exclamation-triangle", link: "retards" }
+                { title: "Utilisateurs", icon: "fas fa-users", link: "user/management" },
+                { title: "Lignes", icon: "fas fa-folder-open", link: "lignes" },
+                // { title: "Tuteurs", icon: "fas fa-user-tie", link: "dashboard/tuteurs" },
+                // { title: "Affectations", icon: "fas fa-link", link: "dashboard/affectations" },
+                // { title: "Tâches", icon: "fas fa-tasks", link: "taches" },
+                // { title: "Documents", icon: "fas fa-folder-open", link: "documents" },
+                // { title: "Evaluations", icon: "fas fa-star-half-alt", link: "evaluations" },
+                // { title: "Retards", icon: "fas fa-exclamation-triangle", link: "retards" }
             ],
-            superviseur: [
-                { title: "Dashboard", icon: "fas fa-tachometer-alt", link: "/superviseur" },
-                { title: "Stagiaires", icon: "fas fa-graduation-cap", link: "interns/list" },
-                { title: "Tâches", icon: "fas fa-tasks", link: "tasks/supervisor" },
-                { title: "Documents", icon: "fas fa-folder-open", link: "documents/supervisor" },
-                { title: "Evaluations", icon: "fas fa-star-half-alt", link: "evaluations/supervisor" },
-                { title: "Retards", icon: "fas fa-exclamation-triangle", link: "retards" }
+            classic: [
+                { title: "Dashboard", icon: "fas fa-tachometer-alt", link: "dashboard/classic" },
+                { title: "Lignes", icon: "fas fa-folder-open", link: "lignes" },
+                // { title: "Evaluations", icon: "fas fa-star-half-alt", link: "evaluations/supervisor" },
+                // { title: "Retards", icon: "fas fa-exclamation-triangle", link: "retards" }
             ],
-            tuteur: [
-                { title: "Dashboard", icon: "fas fa-tachometer-alt", link: "/tuteur" },
-                { title: "Stagiaires", icon: "fas fa-graduation-cap", link: "tuteur/stagiaires" },
-                { title: "Tâches", icon: "fas fa-tasks", link: "taches/" },
-                { title: "Documents", icon: "fas fa-folder-open", link: "documents/tutor" },
-                { title: "Evaluations", icon: "fas fa-star-half-alt", link: "evaluations/tutor" },
-                { title: "Retards", icon: "fas fa-exclamation-triangle", link: "retards" }
-              ],
-            stagiaire: [
-                { title: "Dashboard", icon: "fas fa-tachometer-alt", link: "/stagiaire" },
-                { title: "Tâches", icon: "fas fa-tasks", link: "tasks/intern" },
-                { title: "Documents", icon: "fas fa-folder-open", link: "documents/intern" },
-            ],
+            // tuteur: [
+            //     { title: "Dashboard", icon: "fas fa-tachometer-alt", link: "/tuteur" },
+            //     { title: "Stagiaires", icon: "fas fa-graduation-cap", link: "tuteur/stagiaires" },
+            //     { title: "Tâches", icon: "fas fa-tasks", link: "taches/" },
+            //     { title: "Documents", icon: "fas fa-folder-open", link: "documents/tutor" },
+            //     { title: "Evaluations", icon: "fas fa-star-half-alt", link: "evaluations/tutor" },
+            //     { title: "Retards", icon: "fas fa-exclamation-triangle", link: "retards" }
+            //   ],
+            // stagiaire: [
+            //     { title: "Dashboard", icon: "fas fa-tachometer-alt", link: "/stagiaire" },
+            //     { title: "Tâches", icon: "fas fa-tasks", link: "tasks/intern" },
+            //     { title: "Documents", icon: "fas fa-folder-open", link: "documents/intern" },
+            // ],
         };
 
         const role = "<?php echo $_SESSION['user_role']; ?>"; 
         const menuElement = document.getElementById("menu");
-
-        // function loadContent(page) {
-        //     //  Mise à jour pour fonctionner avec un routeur PHP.
-        //     //  Redirige simplement vers l'URL correspondante.
-        //     window.location.href = page;
-        // }
-
         const menuItems = menuData[role];
         if (menuItems) {
             menuItems.forEach(item => {
