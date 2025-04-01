@@ -1,4 +1,5 @@
 <?php
+namespace App\Controllers;
 use App\Models\Ligne;
 use Core\Controller;
 class LignesController extends Controller{
@@ -21,7 +22,17 @@ class LignesController extends Controller{
             $this->redirect('/dashboard');
           }
     }
-    public function modifier($id) {
+    public function edit($id)
+    {
+      $ligne = Ligne::getById($id);
+      // dd($ligne);
+      if(!$ligne) {
+        return $this->redirect('/lignes');
+      }
+      return $this->view('lignes/modifier',['ligne' => $ligne],'admin');
+    }
+    public function update($id) 
+    {
       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $ligne = [];
         $ligne['type_ligne'] = $_POST['type_ligne'];
@@ -35,6 +46,7 @@ class LignesController extends Controller{
         Ligne::update($id,$ligne);
         $this->redirect('/dashboard');
       }
+      $this->redirect('/lignes');
 }
 
     public function supprimer($id) {
@@ -47,13 +59,15 @@ class LignesController extends Controller{
       return $this->redirect('/lignes');
     }
 
-    public function liste() {
-        $lignes = Ligne::all();
+    public function liste() 
+    {
+        $lignes = Ligne::getAll();
         return $this->view('lignes/liste',['lignes' => $lignes],'admin');
     }
     public function details($id)
      {
       $ligne = Ligne::getById($id);
+      // dd($ligne);
       if(!$ligne) {
         flash('error','la ligne choisie n\'existe pas ');
         return $this->redirect('/lignes');

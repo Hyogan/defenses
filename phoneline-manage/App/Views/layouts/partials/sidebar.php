@@ -37,7 +37,10 @@
         } 
     </style>
 <nav id="sidebarMenu" style="height: 100%; height: 100vh;" class="sticky col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-            <h1>Gestion Stages</h1>
+          <div class="">
+            <h1 class="h1">Camrail</h1>
+            <h2 class="h5">Gestion Lignes</h2>
+          </div>
             <ul id="menu">
             </ul>
 </nav>
@@ -48,6 +51,8 @@
                 { title: "Dashboard", icon: "fas fa-tachometer-alt", link: "dashboard/admin" },
                 { title: "Utilisateurs", icon: "fas fa-users", link: "user/management" },
                 { title: "Lignes", icon: "fas fa-folder-open", link: "lignes" },
+                // { title: "Lignes", icon: "fas fa-folder-open", link: "lignes" },
+                { title: "Logs", icon: "fas fa-tachometer-alt", link: "dashboard/logs" },
                 // { title: "Tuteurs", icon: "fas fa-user-tie", link: "dashboard/tuteurs" },
                 // { title: "Affectations", icon: "fas fa-link", link: "dashboard/affectations" },
                 // { title: "Tâches", icon: "fas fa-tasks", link: "taches" },
@@ -58,6 +63,7 @@
             classic: [
                 { title: "Dashboard", icon: "fas fa-tachometer-alt", link: "dashboard/classic" },
                 { title: "Lignes", icon: "fas fa-folder-open", link: "lignes" },
+                { title: "Deconnexion", icon: "fas fa-sign-out-alt", link: "/auth/logout" },
                 // { title: "Evaluations", icon: "fas fa-star-half-alt", link: "evaluations/supervisor" },
                 // { title: "Retards", icon: "fas fa-exclamation-triangle", link: "retards" }
             ],

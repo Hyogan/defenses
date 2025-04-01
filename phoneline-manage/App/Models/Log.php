@@ -7,10 +7,12 @@ class Log extends Model
    /**
      * Récupérer tous les logs
      */
-    public static function getAll($limit = null,$offset = null) 
+    public static function getAll($limit = null, $offset = null)
     {
         $db = Database::getInstance();
-        $sql = "SELECT * FROM logs ORDER BY date DESC";
+        $sql = "SELECT l.*, u.email AS user_email FROM logs l LEFT JOIN utilisateurs u ON l.id_utilisateur = u.id ORDER BY l.date DESC";
+        $params = [];
+    
         if ($limit !== null) {
             $sql .= " LIMIT ?";
             $params[] = (int)$limit;
@@ -18,9 +20,10 @@ class Log extends Model
                 $sql .= " OFFSET ?";
                 $params[] = (int)$offset;
             }
-          return $db->fetchAll($sql,$params);
-      }
-  }
+        }
+    
+        return $db->fetchAll($sql, $params);
+    }
 
     /**
      * Récupérer un log par ID
@@ -31,7 +34,6 @@ class Log extends Model
         $log = $db->fetch("SELECT * FROM logs WHERE id = ?", [$id]);
         return $log;
     }
-
     public static function search($criteria) 
     {
         $db = Database::getInstance();

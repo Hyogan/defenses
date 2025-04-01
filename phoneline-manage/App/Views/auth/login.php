@@ -1,8 +1,79 @@
+
+    <style>
+        /* Personnalisation des couleurs */
+        .card {
+            background-color: white;
+            border-color: #f30f20; /* Rouge doux pour la bordure */
+        }
+
+        .card-header {
+            background-color: #f8f9fa; /* Couleur claire pour le fond du header */
+            color: #333; /* Couleur sombre pour le titre */
+            text-align: center;
+            font-size: 1.5rem;
+        }
+
+        .form-label {
+            color: #333; /* Texte des labels */
+        }
+
+        .form-control {
+            border: 1px solid #ddd; /* Bordure plus douce pour les champs de saisie */
+            box-shadow: none;
+        }
+
+        .form-control:focus {
+            border-color: #f30f20; /* Rouge doux au focus */
+            box-shadow: 0 0 0 0.25rem rgba(243, 15, 32, 0.25);
+        }
+
+        .btn-primary {
+            background-color: #f30f20; /* Couleur rouge douce */
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #f8f9fa; /* Fond clair au survol */
+            color: #f30f20; /* Texte rouge au survol */
+            border: 1px solid #f30f20;
+        }
+
+        .text-decoration-none {
+            color: #f30f20;
+        }
+
+        .text-decoration-none:hover {
+            text-decoration: underline;
+            color: #d40017;
+        }
+
+        .alert-danger {
+            background-color: #fff3f3; /* Fond très clair pour les alertes d'erreur */
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+
+        .input-group-text {
+            background-color: #f30f20;
+            color: white;
+        }
+
+        /* Ajout d'une légère bordure autour du formulaire pour le délimiter */
+        .auth-form {
+            border: 1px solid #f0f0f0;
+            border-radius: 8px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card shadow-lg p-4 rounded">
-                <h2 class="text-center mb-4">Login to Your Account</h2>
+                <h2 class="card-header mb-4">Connectez vous a votre compte</h2>
+                <img src="/public/logo-camrail.jpeg" alt="">
 
                 <?php if (isset($error)): ?>
                     <div class="alert alert-danger" role="alert">
@@ -35,11 +106,11 @@
                         <button type="submit" class="btn btn-primary">Login</button>
                     </div>
 
-                    <div class="mt-3 text-center">
+                    <!-- <div class="mt-3 text-center">
                         <a href="/forgot-password" class="text-decoration-none">Forgot Password?</a>
                         <br>
                         <a href="/register" class="text-decoration-none">Don't have an account? Register</a>
-                    </div>
+                    </div> -->
                 </form>
             </div>
         </div>
@@ -57,6 +128,8 @@
         // toggle the eye / eye slash icon
         this.classList.toggle('fa-eye');
         this.classList.toggle('fa-eye-slash');
-        // alert(this.classList)
     });
 </script>
+
+<script src="https://kit.fontawesome.com/a076d05399.js"></script> <!-- Font Awesome CDN for icon -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

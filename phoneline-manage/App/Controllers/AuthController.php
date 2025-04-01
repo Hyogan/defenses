@@ -10,28 +10,10 @@ class AuthController extends Controller{
             $this->redirect('/dashboard');
         }
         $this->view('auth/login',[
-            'title' => 'Connexion | Internships Management',
+            'title' => 'Connexion | Gestion de lignes',
             'pageTitle' => 'Connexion'
         ],'auth');
     }
-
-
-    public function register() 
-    {
-        // Si l'utilisateur est déjà connecté, rediriger vers le tableau de bord
-        if (Auth::isLoggedIn()) {
-            $this->redirect('/dashboard');
-            exit;
-        }
-        $this->view('auth/register',
-        [
-          'title' => 'Inscription | Internships Management',
-          'pageTitle' => 'Inscription'
-        ],'auth'
-      );
-    }
-
-
 
     public function authenticate() 
     {
@@ -57,7 +39,7 @@ class AuthController extends Controller{
             
             if (!empty($errors)) {
               return $this->view('auth/login', [
-                'title' => 'Connexion | Internships Management',
+                'title' => 'Connexion | Gestion de lignes',
                 'pageTitle' => 'Connexion',
                 'email' => $email,
                 'errors' => $errors
@@ -67,7 +49,7 @@ class AuthController extends Controller{
             $user = Auth::authenticate($email, $password);
             if (!$user) {
                return $this->view('auth/login', [
-                    'title' => 'Connexion | Internships Management',
+                    'title' => 'Connexion  | Gestion de lignes',
                     'pageTitle' => 'Connexion',
                     'email' => $email,
                     'error' => 'Identifiants incorrects'
@@ -77,7 +59,7 @@ class AuthController extends Controller{
             // Vérifier si le compte est actif
             if ($user['statut'] !== 'actif') {
                 $this->view('auth/login', [
-                    'title' => 'Connexion | Internships Management',
+                    'title' => 'Connexion | Gestion de lignes',
                     'pageTitle' => 'Connexion',
                     'email' => $email,
                     'error' => 'Votre compte est désactivé'
@@ -110,25 +92,6 @@ class AuthController extends Controller{
     $this->redirect('/dashboard');
   }
 }
-
-    // Connexion des utilisateurs
-    // public function login() {
-    //     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    //         $email = $_POST['email'];
-    //         $password = $_POST['password'];
-    //         $user = User::authenticate($email, $password);
-            
-    //         if ($user) {
-    //             // Authentification réussie, rediriger vers la page d'accueil ou tableau de bord
-    //             header("Location: /dashboard");
-    //         } else {
-    //             // Échec de l'authentification, afficher un message d'erreur
-    //             echo "Email ou mot de passe incorrect";
-    //         }
-    //     }
-    //     require_once('views/auth/login.php');
-    // }
-
     // Réinitialisation du mot de passe
     public function resetPassword() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -141,7 +104,7 @@ class AuthController extends Controller{
         }
         
         $this->view('auth/reset_password', [
-            'title' => 'Réinitialisation du mot de passe | Internships Management',
+            'title' => 'Réinitialisation du mot de passe | Gestion de lignes',
             'pageTitle' => 'Réinitialisation du mot de passe'
         ],'auth');
     }

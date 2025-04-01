@@ -18,15 +18,18 @@ class Auth{
     {
         $db = Database::getInstance();
         $user = $db->fetch("SELECT * FROM utilisateurs WHERE email = ?", [$email]);
-        
-        if ($user && password_verify($password, $user['mot_de_passe'])) {
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        // $data = [
+        //   $user['mot_de_passe']
+        // ]
+        if ($user && password_verify($password,$hashedPassword)) {
             // Log the successful login
             Log::create([
                 'userId' => $user['id'],  // Use the user ID of the logged-in user
                 'action' => 'Authentification utilisateur',
                 'message' => 'Connexion réussie pour l\'utilisateur avec l\'email : ' . $email
             ]);
-            
+
             // Store user information in the session
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['nom'];

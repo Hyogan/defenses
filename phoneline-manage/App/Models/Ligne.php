@@ -7,9 +7,9 @@ use Core\Database;
 class Ligne extends Model {
     protected static $table = 'lignes';
 
-    public static function getAll() {
+    public static function getAll($limit = 10, $offset = 0) {
         $db = Database::getInstance();
-        return $db->fetchAll("SELECT * FROM lignes");
+        return $db->fetchAll("SELECT * FROM lignes LIMIT ? OFFSET ?", [$limit, $offset]);
     }
 
     public static function getById($id) {

@@ -1,7 +1,7 @@
 <?php
 return [
   'host' => 'localhost',
-  'dbname' => 'internship_management',
+  'dbname' => 'gestion_lignes',
   'username' => 'root',
   'password' => 'root',
   'charset' => 'utf8mb4',

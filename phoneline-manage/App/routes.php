@@ -3,6 +3,7 @@
 use App\Controllers\AuthController;
 use App\Controllers\DashboardController;
 use App\Controllers\UserController;
+use App\Controllers\LignesController;
 
 $routes = [
     // Routes pour la page d'accueil
@@ -10,9 +11,7 @@ $routes = [
     '/home' => [DashboardController::class, 'home'],
     '/auth/login' => [AuthController::class, 'login'],
     '/auth/authenticate' => [AuthController::class, 'authenticate'],
-    '/auth/register' => [AuthController::class, 'register'],
     '/auth/logout' => [AuthController::class, 'logout'],
-    '/user/store' => [UserController::class, 'store'],
   
     // Routes pour l'authentification
     '/login' => [AuthController::class, 'login'],
@@ -23,15 +22,26 @@ $routes = [
     '/lignes' => [LignesController::class, 'liste'],
     '/lignes/ajouter' => [LignesController::class, 'ajouter'],
     '/lignes/store' => [LignesController::class, 'store'],
-    '/lignes/modifier' => [LignesController::class, 'modifier'],
-    '/lignes/supprimer' => [LignesController::class, 'supprimer'],
-    '/lignes/details' => [LignesController::class, 'details'],
+    '/lignes/modifier/{id}' => [LignesController::class, 'edit'],
+    '/lignes/update/{id}' => [LignesController::class, 'update'],
+    '/lignes/supprimer/{id}' => [LignesController::class, 'supprimer'],
+    '/lignes/details/{id}' => [LignesController::class, 'details'],
     '/lignes/imprimer' => [LignesController::class, 'imprimer'],
     
+
+    '/user/management' => [UserController::class, 'index'],
+    '/user/create' => [UserController::class, 'create'],
+    '/user/store' => [UserController::class, 'store'],
+    '/user/details/{id}' => [UserController::class, 'show'],
+    '/user/edit/{id}' => [UserController::class, 'edit'],
+    '/user/update/{id}' => [UserController::class, 'update'],
+
+
     // Routes pour les tableaux de bord (selon le rôle)
     '/dashboard' => [DashboardController::class, 'index'],
     '/dashboard/utilisateur' => [DashboardController::class, 'superviseur'],
     '/dashboard/admin' => [DashboardController::class, 'admin'],
+    '/dashboard/logs' => [DashboardController::class, 'logs'],
 ];
 
 

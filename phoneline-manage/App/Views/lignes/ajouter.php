@@ -1,8 +1,5 @@
-<?php include 'views/layout/template.php'; ?>
-
-<?php ob_start(); ?>
 <h2>Ajouter une ligne</h2>
-<form method="post">
+<form method="post" action="/lignes/store">
     <div class="form-group">
         <label for="type_ligne">Type de ligne:</label>
         <input type="text" name="type_ligne" id="type_ligne" class="form-control" required>
@@ -37,4 +34,3 @@
     </div>
     <button type="submit" class="btn btn-primary">Ajouter</button>
 </form>
-<?php $content = ob_get_clean(); ?>

@@ -18,6 +18,24 @@ class User extends Model {
         return $db->fetchAll("SELECT * FROM utilisateurs ORDER BY nom, prenom ASC");
     }
 
+    public static function getWithLogs($userId)
+    {
+      $sql = "SELECT 
+          u.*,
+          l.date AS log_date,
+          l.action AS log_action,
+          l.message AS log_message
+      FROM 
+          utilisateurs u
+      LEFT JOIN 
+          logs l ON u.id = l.id_utilisateur
+      WHERE 
+          u.id = ?"; 
+          $db = Database::getInstance();
+          $user = $db->fetch($sql,[$userId]);
+      return $user;
+    }
+
     /**
      * Récupérer un utilisateur par ID
      */
@@ -31,7 +49,7 @@ class User extends Model {
     /**
      * Ajouter un nouvel utilisateur
      */
-    public static function create($data, $role = 'stagiaire') {
+    public static function create($data, $role = 'classic') {
         $db = Database::getInstance();
         $query = "INSERT INTO utilisateurs (nom, prenom, email, mot_de_passe, role, statut, date_creation) 
                    VALUES (?, ?, ?, ?, ?, ?, NOW())";
@@ -133,7 +151,7 @@ class User extends Model {
             $data['statut'] ?? 'actif',
             $id
         ];
-        $db->query($query, $params);
+        $queryResult =  $db->query($query, $params);
 
         // Log the user update action
         Log::create([
@@ -141,6 +159,7 @@ class User extends Model {
             'action' => 'Mise à jour d\'utilisateur',
             'message' => 'Informations de l\'utilisateur avec l\'ID : ' . $id . ' mises à jour.'
         ]);
+        return $queryResult;
     }
 
     /**

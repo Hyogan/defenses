@@ -61,10 +61,25 @@ class DashboardController extends Controller {
           'allUsers' => $allUsers,
           'userCount' => User::count(),
           'lignesCount' => Ligne::count(),
-          'activiteRecente' => Log::getAll(10),
+          'activiteRecente' => Log::getAll(5),
         ];
         return $this->view('dashboard/admin', 
         $data,
         'admin');
+    }
+
+    public function logs()
+    {
+      if (!Auth::isLoggedIn()) {
+          return $this->redirect('/auth/login');
+      }
+      if (!Auth::isAdmin()) {
+          return $this->redirect('/dashboard');
+      }
+      $logs = Log::getAll();
+      // dd($logs  );
+      return $this->view('dashboard/logs',
+      ['logsData' => $logs],
+      'admin');
     }
   }
