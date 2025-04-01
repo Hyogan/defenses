@@ -62,6 +62,8 @@ class LignesController extends Controller{
     public function liste() 
     {
         $lignes = Ligne::getAll();
+
+        // dd($lignes);
         return $this->view('lignes/liste',['lignes' => $lignes],'admin');
     }
     public function details($id)

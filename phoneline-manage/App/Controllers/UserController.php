@@ -123,7 +123,7 @@ class UserController extends Controller{
             return $this->view('utilisateurs/modifier', ['errors' => $errors, 'user' => $data], 'admin');
         }
 
-        if (User::getByEmail($data['email'], $id)) {
+        if (User::getByEmail($data['email'])) {
             $errors['email'] = "L'email choisi est déjà utilisé.";
             $data['id'] = $id;
             return $this->view('utilisateurs/modifier', ['errors' => $errors, 'user' => $data], 'admin');

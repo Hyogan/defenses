@@ -34,7 +34,7 @@ CREATE TABLE logs (
 );
 
 ALTER TABLE utilisateurs ADD COLUMN date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
-
+ALTER TABLE utilisateurs ADD COLUMN  date_modification TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 -- credentials : email(admin@example.com) , mot de passe : 123
 INSERT INTO utilisateurs (nom, prenom, email, mot_de_passe, role)
 VALUES ('admin', 'admin', 'admin@example.com', '$2y$10$1/UlEDDpr4LMovXm59sW0ecEsj.Xxxw5l.0r/iXmP3WmHcK487IcO

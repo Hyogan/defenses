@@ -39,7 +39,7 @@ $routes = [
 
     // Routes pour les tableaux de bord (selon le rôle)
     '/dashboard' => [DashboardController::class, 'index'],
-    '/dashboard/utilisateur' => [DashboardController::class, 'superviseur'],
+    '/dashboard/classic' => [DashboardController::class, 'classic'],
     '/dashboard/admin' => [DashboardController::class, 'admin'],
     '/dashboard/logs' => [DashboardController::class, 'logs'],
 ];

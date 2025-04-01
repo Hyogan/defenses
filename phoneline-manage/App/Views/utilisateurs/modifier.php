@@ -11,7 +11,7 @@
     </div>
 <?php endif; ?>
 
-<form method="post">
+<form method="post" action="/user/update/<?=$user['id']?>">
     <div class="form-group">
         <label for="nom">Nom:</label>
         <input type="text" name="nom" id="nom" class="form-control" value="<?php echo htmlspecialchars($user['nom']); ?>" required>

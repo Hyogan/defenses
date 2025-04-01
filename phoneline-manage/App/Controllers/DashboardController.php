@@ -38,10 +38,11 @@ class DashboardController extends Controller {
             return $this->redirect('/dashboard');
         }
        return $this->view(
-          'dashboard/stagiaire',
+          'dashboard/classic',
           [
             'userCount' => User::count(),
             'lignesCount' => Ligne::count(),
+            'lignesRecentes' => Ligne::getAll(10)
             ],
          'admin');
     }

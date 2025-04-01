@@ -1,5 +1,6 @@
 <h2>Liste des lignes</h2>
 <table class="table">
+<a href="lignes/ajouter" class="btn btn-success">Ajouter une ligne</a>
     <thead>
         <tr>
             <th>ID</th>
@@ -25,4 +26,3 @@
         <?php endforeach; ?>
     </tbody>
 </table>
-<a href="lignes/ajouter" class="btn btn-success">Ajouter une ligne</a>

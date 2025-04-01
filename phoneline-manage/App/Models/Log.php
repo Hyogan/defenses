@@ -12,7 +12,6 @@ class Log extends Model
         $db = Database::getInstance();
         $sql = "SELECT l.*, u.email AS user_email FROM logs l LEFT JOIN utilisateurs u ON l.id_utilisateur = u.id ORDER BY l.date DESC";
         $params = [];
-    
         if ($limit !== null) {
             $sql .= " LIMIT ?";
             $params[] = (int)$limit;
@@ -21,7 +20,6 @@ class Log extends Model
                 $params[] = (int)$offset;
             }
         }
-    
         return $db->fetchAll($sql, $params);
     }
 
