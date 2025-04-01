@@ -1,5 +1,6 @@
 <div class="container mt-5">
         <h2>Détails de la ligne</h2>
+        
         <table class="table">
             <tbody>
                 <tr>
@@ -44,6 +45,7 @@
         <div class="mt-4">
             <a href="/lignes/modifier/<?php echo $ligne['id']; ?>" class="btn btn-warning">Modifier</a>
             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Supprimer</button>
+            <a href="/ligne/export/<?= $ligne['id']?>" class="btn btn-info">Exporter la ligne</a>
             <a href="/lignes" class="btn btn-secondary">Retour à la liste</a>
         </div>
     </div>

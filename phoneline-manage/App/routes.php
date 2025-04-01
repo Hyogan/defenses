@@ -27,6 +27,8 @@ $routes = [
     '/lignes/supprimer/{id}' => [LignesController::class, 'supprimer'],
     '/lignes/details/{id}' => [LignesController::class, 'details'],
     '/lignes/imprimer' => [LignesController::class, 'imprimer'],
+    '/lignes/export' => [LignesController::class, 'exportPdf'],
+    '/ligne/export/{id}' => [LignesController::class, 'imprimer'],
     
 
     '/user/management' => [UserController::class, 'index'],

@@ -1,6 +1,7 @@
 <h2>Liste des lignes</h2>
 <table class="table">
 <a href="lignes/ajouter" class="btn btn-success">Ajouter une ligne</a>
+<a href="lignes/export" class="btn btn-info mx-4">Exporter les lignes</a>
     <thead>
         <tr>
             <th>ID</th>
