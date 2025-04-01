@@ -64,20 +64,21 @@
             border-radius: 8px;
             padding: 20px;
         }
+        img{
+          width: 100px;
+          height: auto;
+        }
     </style>
-</head>
-<body>
 
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card shadow-lg p-4 rounded">
+            <img src="/logo-camrail.jpeg" alt="Logo Camrails">
                 <h2 class="card-header mb-4">Connectez vous a votre compte</h2>
                 <!-- <?php
                     echo password_hash("123", PASSWORD_DEFAULT);
                   ?> -->
-                <img src="/public/logo-camrail.jpeg" alt="">
-
                 <?php if (isset($error)): ?>
                     <div class="alert alert-danger" role="alert">
                         <?= $error ?>
@@ -134,5 +135,5 @@
     });
 </script>
 
-<script src="https://kit.fontawesome.com/a076d05399.js"></script> <!-- Font Awesome CDN for icon -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- <script src="https://kit.fontawesome.com/a076d05399.js"></script>  Font Awesome CDN for icon -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->

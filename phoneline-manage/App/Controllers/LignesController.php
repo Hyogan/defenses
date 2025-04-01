@@ -118,7 +118,7 @@ public function exportPdf($params = null) {
     $lignes = Ligne::getAll();
     if ($lignes) {
       $rowHeight = 10; // Height of each row
-      $pageHeight = $pdf->GetPageHeight() - 30; // Leave some margin
+      $pageHeight = $pdf->GetPageHeight() - 30; // Leave some marginc
       $y = $pdf->GetY();
       foreach ($lignes as $ligne) {
         if ($y + $rowHeight > $pageHeight) {

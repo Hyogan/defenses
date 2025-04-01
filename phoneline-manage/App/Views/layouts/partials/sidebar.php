@@ -5,12 +5,6 @@
             background-color: #343a40 !important;
             color: white;
         }
-        #sidebarMenu h1 {
-            padding: 20px;
-            text-align: center;
-            font-size: 20px;
-            border-bottom: 1px solid #6c757d;
-        }
         #sidebarMenu ul {
             list-style: none;
             padding: 0;
@@ -34,16 +28,36 @@
             margin-right: 10px; 
             width: 20px; 
             text-align: center; 
+        }
+        .top-block {
+          display: flex;
+          width: 100%;
+          padding-block: 5px;
+          flex-direction: column;
+          align-items: center;
+          border-bottom: 1px solid #6c757d;
         } 
+        #sidebarMenu h1 {
+            padding-inline: 20px;
+            text-align: center;
+            font-size: 25px;
+        }
+        img{
+          width: 80px;
+          height: auto;
+          border-radius: 50%;
+        }
+
     </style>
-<nav id="sidebarMenu" style="height: 100%; height: 100vh;" class="sticky col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-          <div class="">
+  <nav id="sidebarMenu" style="height: 100%; height: 100vh;" class="sticky col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+          <div class="top-block">
             <h1 class="h1">Camrail</h1>
+            <img src="/logo-camrail.jpeg" alt="Logo Camrails">
             <h2 class="h5">Gestion Lignes</h2>
           </div>
             <ul id="menu">
             </ul>
-</nav>
+  </nav>
 
     <script>
         const menuData = {
@@ -53,6 +67,7 @@
                 { title: "Lignes", icon: "fas fa-folder-open", link: "lignes" },
                 // { title: "Lignes", icon: "fas fa-folder-open", link: "lignes" },
                 { title: "Logs", icon: "fas fa-tachometer-alt", link: "dashboard/logs" },
+                { title: "Deconnexion", icon: "fas fa-sign-out-alt", link: "auth/logout" },
                 // { title: "Tuteurs", icon: "fas fa-user-tie", link: "dashboard/tuteurs" },
                 // { title: "Affectations", icon: "fas fa-link", link: "dashboard/affectations" },
                 // { title: "Tâches", icon: "fas fa-tasks", link: "taches" },
@@ -97,6 +112,6 @@
             window.location.href = "/login"; // Rediriger vers la page de connexion
         }
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> -->
 </body>
 </html>
