@@ -38,9 +38,9 @@ $currentPage = $currentPage ?? '';
         <div class="navbar-nav">
             <div class="nav-item text-nowrap d-flex align-items-center">
                 <?php if (isset($_SESSION['user_id'])): ?>
-                    <span class="nav-link px-3 text-white">
+                    <a href="/user/profile" class="nav-link px-3 text-white">
                         <i class="fas fa-user me-2"></i><?= $_SESSION['user_name'] ?? 'Utilisateur' ?>
-                    </span>
+                    </a>
                     <a class="nav-link px-3" href="/auth/logout">
                         <i class="fas fa-sign-out-alt"></i> Déconnexion
                     </a>

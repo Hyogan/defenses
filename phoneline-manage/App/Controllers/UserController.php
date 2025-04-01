@@ -165,4 +165,42 @@ class UserController extends Controller{
 
         return $this->redirect('/user/management');
     }
+    public function profile() {
+      // dd('fhsdf');
+      if(!Auth::isLoggedIn()) 
+      {
+        $this->redirect('/');
+      }
+      $user = User::getById(Auth::id());
+      $userInfos = $user;
+      return $this->view('dashboard/profile',['userInfo' => $userInfos],'admin');
+    }
+
+    public function changePassword() {
+      if (!Auth::isLoggedIn()) {
+          return $this->redirect('/auth/login');
+      }
+      if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+          $currentPassword = $_POST['current_password'];
+          $newPassword = $_POST['new_password'];
+          $confirmPassword = $_POST['confirm_password'];
+          $user = User::getById(Auth::id());
+          if (!password_verify($currentPassword, $user['mot_de_passe'])) {
+              $message = ['type' => 'danger', 'text' => 'Mot de passe actuel incorrect.'];
+          } elseif ($newPassword !== $confirmPassword) {
+              $message = ['type' => 'danger', 'text' => 'Les nouveaux mots de passe ne correspondent pas.'];
+          } elseif (strlen($newPassword) < 8) {
+              $message = ['type' => 'danger', 'text' => 'Le nouveau mot de passe doit contenir au moins 8 caractères.'];
+          } else {
+              User::updatePassword(Auth::id(), $newPassword);
+              $message = ['type' => 'success', 'text' => 'Mot de passe modifié avec succès.'];
+          }
+
+          return $this->view('dashboard/profile', 
+          ['message' => $message,'userInfo' => $user],
+          'admin'
+        );
+      }
+      return $this->redirect('user/profile');
+  }
 }

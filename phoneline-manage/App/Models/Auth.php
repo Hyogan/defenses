@@ -18,18 +18,13 @@ class Auth{
     {
         $db = Database::getInstance();
         $user = $db->fetch("SELECT * FROM utilisateurs WHERE email = ?", [$email]);
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        // $data = [
-        //   $user['mot_de_passe']
-        // ]
-        if ($user && password_verify($password,$hashedPassword)) {
-            // Log the successful login
+        // dd([$user, $password]);
+        if ($user && password_verify($password,$user['mot_de_passe'])) {
             Log::create([
                 'userId' => $user['id'],  // Use the user ID of the logged-in user
                 'action' => 'Authentification utilisateur',
                 'message' => 'Connexion réussie pour l\'utilisateur avec l\'email : ' . $email
             ]);
-
             // Store user information in the session
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['nom'];
@@ -65,37 +60,37 @@ class Auth{
     }
 
     // Authentifier et démarrer une session utilisateur
-    public static function login($username, $password)
-    {
-        $db = Database::getInstance();
-        $user = $db->fetch("SELECT * FROM utilisateurs WHERE nom = ?", [$username]);
+    // public static function login($username, $password)
+    // {
+    //     $db = Database::getInstance();
+    //     $user = $db->fetch("SELECT * FROM utilisateurs WHERE nom = ?", [$username]);
         
-        if ($user && password_verify($password, $user['mot_de_passe'])) {
-            // Log the successful login action
-            Log::create([
-                'userId' => $user['id'],  // Logged-in user's ID
-                'action' => 'Authentification utilisateur',
-                'message' => 'Connexion réussie pour l\'utilisateur avec le nom : ' . $username
-            ]);
+    //     if ($user && password_verify($password, $user['mot_de_passe'])) {
+    //         // Log the successful login action
+    //         Log::create([
+    //             'userId' => $user['id'],  // Logged-in user's ID
+    //             'action' => 'Authentification utilisateur',
+    //             'message' => 'Connexion réussie pour l\'utilisateur avec le nom : ' . $username
+    //         ]);
             
-            // Start user session
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['username'] = $user['nom'];
-            $_SESSION['user_role'] = $user['role'];
-            $_SESSION['logged_in'] = true;
+    //         // Start user session
+    //         $_SESSION['user_id'] = $user['id'];
+    //         $_SESSION['username'] = $user['nom'];
+    //         $_SESSION['user_role'] = $user['role'];
+    //         $_SESSION['logged_in'] = true;
 
-            return true;
-        }
+    //         return true;
+    //     }
         
-        // Log the failed login attempt
-        Log::create([
-            'userId' => null,  // No authenticated user for failed login
-            'action' => 'Authentification utilisateur',
-            'message' => 'Tentative de connexion échouée pour l\'utilisateur : ' . $username
-        ]);
+    //     // Log the failed login attempt
+    //     Log::create([
+    //         'userId' => null,  // No authenticated user for failed login
+    //         'action' => 'Authentification utilisateur',
+    //         'message' => 'Tentative de connexion échouée pour l\'utilisateur : ' . $username
+    //     ]);
 
-        return false;
-    }
+    //     return false;
+    // }
 
     /**
      * Obtenir l'ID de l'utilisateur connecté

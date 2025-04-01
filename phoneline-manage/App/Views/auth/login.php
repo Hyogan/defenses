@@ -73,6 +73,9 @@
         <div class="col-md-6">
             <div class="card shadow-lg p-4 rounded">
                 <h2 class="card-header mb-4">Connectez vous a votre compte</h2>
+                <!-- <?php
+                    echo password_hash("123", PASSWORD_DEFAULT);
+                  ?> -->
                 <img src="/public/logo-camrail.jpeg" alt="">
 
                 <?php if (isset($error)): ?>

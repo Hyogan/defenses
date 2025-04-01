@@ -1,6 +1,7 @@
 <?php 
 namespace App\Controllers;
 
+use App\Models\User;
 use Core\Controller;
 use App\Models\Auth;
 
@@ -15,63 +16,74 @@ class AuthController extends Controller{
         ],'auth');
     }
 
-    public function authenticate() 
-    {
-      // dd('fds');
-        // Si l'utilisateur est déjà connecté, rediriger vers le tableau de bord
-        if (Auth::isLoggedIn()) {
-            $this->redirect('/dashboard');
-        }
-        
-        // Vérifier si le formulaire a été soumis
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $email = $_POST['email'] ?? '';
-            $password = $_POST['password'] ?? '';
-        -    $remember = isset($_POST['remember']) ? true : false;
-            $errors = [];
-            
-            if (empty($email)) {
-                $errors['email'] = 'L\'adresse mail est obligatoire';
-            }
-            if (empty($password)) {
-                $errors['password'] = 'Le mot de passe est obligatoire';
-            }
-            
-            if (!empty($errors)) {
+    public function authenticate() {
+      if (Auth::isLoggedIn()) {
+          $this->redirect('/dashboard');
+      }
+
+      if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+          $email = $_POST['email'] ?? '';
+          $password = $_POST['password'] ?? '';
+          $errors = [];
+
+          if (empty($email)) {
+              $errors['email'] = 'L\'adresse mail est obligatoire';
+          }
+          if (empty($password)) {
+              $errors['password'] = 'Le mot de passe est obligatoire';
+          }
+
+          if (!empty($errors)) {
               return $this->view('auth/login', [
-                'title' => 'Connexion | Gestion de lignes',
-                'pageTitle' => 'Connexion',
-                'email' => $email,
-                'errors' => $errors
-              ],'auth');
-            }
-            // $user = User::getByEmail($email);
-            $user = Auth::authenticate($email, $password);
-            if (!$user) {
+                  'title' => 'Connexion | Gestion de lignes',
+                  'pageTitle' => 'Connexion',
+                  'email' => $email,
+                  'errors' => $errors
+              ], 'auth');
+          }
+
+          $user = User::getByEmail($email); // Get user by email from the database
+
+          if (!$user) {
+              return $this->view('auth/login', [
+                  'title' => 'Connexion  | Gestion de lignes',
+                  'pageTitle' => 'Connexion',
+                  'email' => $email,
+                  'error' => 'Identifiants incorrects'
+              ], 'auth');
+          }
+
+          // Check if the account is active FIRST
+          if ($user['statut'] !== 'actif') {
                return $this->view('auth/login', [
-                    'title' => 'Connexion  | Gestion de lignes',
-                    'pageTitle' => 'Connexion',
-                    'email' => $email,
-                    'error' => 'Identifiants incorrects'
-                ],'auth');
-            }
-            
-            // Vérifier si le compte est actif
-            if ($user['statut'] !== 'actif') {
-                $this->view('auth/login', [
-                    'title' => 'Connexion | Gestion de lignes',
-                    'pageTitle' => 'Connexion',
-                    'email' => $email,
-                    'error' => 'Votre compte est désactivé'
-                ],'auth');
-            }
-    
-    // Connecter l'utilisateur
-    $_SESSION['user_id'] = $user['id'];
-    $_SESSION['user_name'] = $user['prenom'] . ' ' . $user['nom'];
-    $_SESSION['user_email'] = $user['email'];
-    $_SESSION['logged_in'] = true;
-    $_SESSION['user_role'] = $user['role'];
+                  'title' => 'Connexion | Gestion de lignes',
+                  'pageTitle' => 'Connexion',
+                  'email' => $email,
+                  'error' => 'Votre compte est désactivé'
+              ],'auth');
+          }
+
+          // THEN, authenticate the user
+           if (!Auth::authenticate($email, $password)) {
+              return $this->view('auth/login', [
+                  'title' => 'Connexion | Gestion de lignes',
+                  'pageTitle' => 'Connexion',
+                  'email' => $email,
+                  'error' => 'Identifiants incorrects'
+              ], 'auth');
+          }
+
+          // Connect the user
+          $_SESSION['user_id'] = $user['id'];
+          $_SESSION['user_name'] = $user['prenom'] . ' ' . $user['nom'];
+          $_SESSION['user_email'] = $user['email'];
+          $_SESSION['logged_in'] = true;
+          $_SESSION['user_role'] = $user['role'];
+
+          // Redirect to the dashboard
+          $this->redirect('/dashboard');
+      }
+  
     // die($user);
 
     // var_dump('fsdfsd');
@@ -89,8 +101,7 @@ class AuthController extends Controller{
     // }
     
     // Rediriger vers le tableau de bord
-    $this->redirect('/dashboard');
-  }
+  
 }
     // Réinitialisation du mot de passe
     public function resetPassword() {

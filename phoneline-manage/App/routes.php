@@ -35,6 +35,8 @@ $routes = [
     '/user/details/{id}' => [UserController::class, 'show'],
     '/user/edit/{id}' => [UserController::class, 'edit'],
     '/user/update/{id}' => [UserController::class, 'update'],
+    '/user/profile' => [UserController::class, 'profile'],
+    '/user/changePassword' => [UserController::class, 'changePassword'],
 
 
     // Routes pour les tableaux de bord (selon le rôle)

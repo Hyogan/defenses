@@ -63,7 +63,7 @@
             classic: [
                 { title: "Dashboard", icon: "fas fa-tachometer-alt", link: "dashboard/classic" },
                 { title: "Lignes", icon: "fas fa-folder-open", link: "lignes" },
-                { title: "Deconnexion", icon: "fas fa-sign-out-alt", link: "/auth/logout" },
+                { title: "Deconnexion", icon: "fas fa-sign-out-alt", link: "auth/logout" },
                 // { title: "Evaluations", icon: "fas fa-star-half-alt", link: "evaluations/supervisor" },
                 // { title: "Retards", icon: "fas fa-exclamation-triangle", link: "retards" }
             ],
