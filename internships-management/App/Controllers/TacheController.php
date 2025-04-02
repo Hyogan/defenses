@@ -49,7 +49,7 @@ class TacheController extends Controller{
         $tuteur = ($role == 'tuteur' ?  Tuteur::getByUserId(Auth::id()) : null);
         $tuteur_id = $tuteur['id'];
         $stagiaires = $role == 'tuteur'
-                            ? $stagiaires = Stagiaire::getByTuteurId(tuteurId: $tuteur_id)
+                            ? $stagiaires = Stagiaire::getByTuteurId( $tuteur_id)
                             : $stagiaires = Stagiaire::getAllStagiaires();
         // dd($taches);
         $this->view('taches/index', 
@@ -131,7 +131,6 @@ class TacheController extends Controller{
         }
         
         $stagiaires = Stagiaire::getAllStagiaires();
-        
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = [
                 'titre' => $_POST['titre'],
@@ -171,7 +170,6 @@ class TacheController extends Controller{
                 $this->redirect('/taches');
             }
         }
-        
         $this->view('taches/edit', ['tache' => $tache, 'stagiaires' => $stagiaires]);
     }
     

@@ -57,7 +57,19 @@ class Evaluation extends Model {
     // Obtenir toutes les évaluations d'un tuteur
     public static function getByTuteur($tuteurId) {
         $db = Database::getInstance();
-        return $db->fetchAll("SELECT * FROM evaluations WHERE tuteur_id = ?", [$tuteurId]);
+        $sql =  "
+              SELECT e.id, 
+               u1.nom AS stagiaire_nom, 
+               u1.prenom AS stagiaire_prenom, 
+               e.note, 
+               e.commentaires, 
+               e.date_evaluation 
+              FROM evaluations e
+              JOIN stagiaires s ON e.stagiaire_id = s.id
+              JOIN utilisateurs u1 ON s.utilisateur_id = u1.id
+              WHERE e.tuteur_id = ?
+              ORDER BY e.date_evaluation DESC";
+        return $db->fetchAll($sql,[$tuteurId]);
     }
 
     // Supprimer une évaluation
@@ -68,6 +80,21 @@ class Evaluation extends Model {
 
     public static function getById($id) {
         $db = Database::getInstance();
-        return $db->fetchAll("SELECT * FROM evaluations WHERE id = ?", [$id]);
+        return $db->fetch("SELECT * FROM evaluations WHERE id = ?", [$id]);
+    }
+
+    public static function getAllWithDetails()
+    {
+      $db = Database::getInstance();
+      $sql = "SELECT e.id, u1.nom AS stagiaire_nom, u1.prenom AS stagiaire_prenom, 
+              u2.nom AS tuteur_nom, u2.prenom AS tuteur_prenom, 
+              e.note, e.commentaires, e.date_evaluation 
+                FROM evaluations e
+                JOIN stagiaires s ON e.stagiaire_id = s.id
+                JOIN utilisateurs u1 ON s.utilisateur_id = u1.id
+                JOIN tuteurs t ON e.tuteur_id = t.id
+                JOIN utilisateurs u2 ON t.utilisateur_id = u2.id
+                ORDER BY e.date_evaluation DESC";
+          return $db->fetchAll($sql);
     }
 }

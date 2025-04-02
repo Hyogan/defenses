@@ -10,11 +10,6 @@ use App\Controllers\AuthController;
 use App\Controllers\DashboardController;
 use App\Controllers\UserController;
 
-// $router->get('/stagiaires/assign-tuteurs/{id}', 'StagiaireController@assignTuteurs');
-// $router->post('/stagiaires/process-assign-tuteurs/{id}', 'StagiaireController@processAssignTuteurs');
-// $router->get('/stagiaires/remove-tuteur/{stagiaireId}/{tuteurId}', 'StagiaireController@removeTuteur');
-
-
 $routes = [
     // Routes pour la page d'accueil
     '/' => [HomeController::class, 'index'],
@@ -30,10 +25,11 @@ $routes = [
     '/dashboard/affectations' => [StagiaireController::class, 'affectations'],
     '/stagiaire/ajouter' => [StagiaireController::class, 'create'],
     '/stagiaire/store' => [StagiaireController::class, 'store'],
+    '/stagiaire/evaluations' => [EvaluationController::class, 'index'],
     '/stagiaire/modifier/{id}' => [StagiaireController::class, 'edit'],
     '/stagiaire/update/{id}' => [StagiaireController::class, 'update'],
     '/stagiaire/show/{userId}' => [StagiaireController::class, 'show'],
-    '/stagiaire/supprimer/{id}' => [StagiaireController::class, 'supprimer'],
+    '/stagiaire/supprimer/{id}' => [StagiaireController::class, 'delete'],
     '/stagiaire/assign-tuteurs/{id}' => [StagiaireController::class, 'assignTuteurs'],
     '/stagiaire/process-assign-tuteurs/{id}' => [StagiaireController::class, 'processAssignTuteurs'],
     '/stagiaires/remove-tuteur/{stagiaireId}/{tuteurId}' => [StagiaireController::class, 'removeTuteur'],
@@ -65,10 +61,14 @@ $routes = [
     
     
     // Routes pour la gestion des évaluations
-    '/evaluations' => [EvaluationController::class, 'index'],
-    '/evaluation/ajouter' => [EvaluationController::class, 'ajouter'],
+    '/dashboard/evaluations' => [EvaluationController::class, 'allEvaluations'],
+    // '/evaluations' => [EvaluationController::class, 'index'],
+    '/evaluations/tuteur' => [EvaluationController::class, 'tuteur'],
+    '/evaluation/ajouter/{id}' => [EvaluationController::class, 'ajouter'],
     '/evaluation/modifier/{id}' => [EvaluationController::class, 'modifier'],
+    '/evaluation/update/{id}' => [EvaluationController::class, 'update'],
     '/evaluation/supprimer/{id}' => [EvaluationController::class, 'supprimer'],
+    '/stagiaire/{id}/evaluation/store' => [EvaluationController::class, 'store'],
     
     // Routes pour l'authentification
     '/login' => [AuthController::class, 'login'],
@@ -78,71 +78,16 @@ $routes = [
     
     // Routes pour les tableaux de bord (selon le rôle)
     '/dashboard' => [DashboardController::class, 'index'],
-    
     // Tableau de bord spécifique pour les Superviseurs
     '/dashboard/superviseur' => [DashboardController::class, 'superviseur'],
-    
     // Tableau de bord spécifique pour les Tuteurs
     '/dashboard/tuteur' => [DashboardController::class, 'tuteur'],
-    
     // Tableau de bord spécifique pour les Stagiaires
     '/dashboard/stagiaire' => [DashboardController::class, 'stagiaire'],
-    
     // Tableau de bord pour l'admin (gestion complète)
     '/dashboard/admin' => [DashboardController::class, 'admin'],
-
     // Affichage des stagiaires en retard (utilisé pour tous les rôles, mais filtré selon le rôle)
     '/dashboard/retards' => [DashboardController::class, 'retards'],
 ];
-
-
-
-$routes2 = [
-    // Routes pour la page d'accueil
-    '/' => [HomeController::class, 'index'],
-    '/home' => [HomeController::class, 'index'],
-    
-    // Routes pour la gestion des stagiaires
-    '/stagiaires' => [StagiaireController::class, 'index'],
-    '/stagiaire/ajouter' => [StagiaireController::class, 'ajouter'],
-    '/stagiaire/modifier/{id}' => [StagiaireController::class, 'modifier'],
-    '/stagiaire/supprimer/{id}' => [StagiaireController::class, 'supprimer'],
-    
-    // Routes pour la gestion des tuteurs
-    '/tuteurs' => [TuteurController::class, 'index'],
-    '/tuteur/ajouter' => [TuteurController::class, 'ajouter'],
-    '/tuteur/modifier/{id}' => [TuteurController::class, 'modifier'],
-    '/tuteur/supprimer/{id}' => [TuteurController::class, 'supprimer'],
-    
-    // Routes pour la gestion des tâches
-    '/taches' => [TacheController::class, 'index'],
-    '/tache/ajouter' => [TacheController::class, 'ajouter'],
-    '/tache/modifier/{id}' => [TacheController::class, 'modifier'],
-    '/tache/supprimer/{id}' => [TacheController::class, 'supprimer'],
-    
-    // Routes pour la gestion des documents
-    '/documents' => [DocumentController::class, 'index'],
-    '/document/ajouter' => [DocumentController::class, 'ajouter'],
-    '/document/telecharger/{id}' => [DocumentController::class, 'telecharger'],
-    '/document/modifier/{id}' => [DocumentController::class, 'modifier'],
-    '/document/supprimer/{id}' => [DocumentController::class, 'supprimer'],
-    
-    // Routes pour la gestion des évaluations
-    '/evaluations' => [EvaluationController::class, 'index'],
-    '/evaluation/ajouter' => [EvaluationController::class, 'ajouter'],
-    '/evaluation/modifier/{id}' => [EvaluationController::class, 'modifier'],
-    '/evaluation/supprimer/{id}' => [EvaluationController::class, 'supprimer'],
-    
-    // Routes pour l'authentification
-    '/login' => [AuthController::class, 'login'],
-    '/logout' => [AuthController::class, 'logout'],
-    '/register' => [AuthController::class, 'register'],
-    '/password/reset' => [AuthController::class, 'resetPassword'],
-    
-    // Routes pour le tableau de bord
-    '/dashboard' => [DashboardController::class, 'index'],
-    '/dashboard/retards' => [DashboardController::class, 'retards'],
-];
-
 
 return $routes;

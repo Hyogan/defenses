@@ -1,4 +1,3 @@
-<?php include_once __DIR__ . '/../partials/header.php'; ?>
 
 <div class="container mt-5">
     <h2>Modifier l'évaluation</h2>
@@ -16,13 +15,11 @@
         </div>
         
         <div class="mb-3">
-            <label for="commentaire" class="form-label">Commentaires</label>
-            <textarea name="commentaire" id="commentaire" class="form-control" rows="4" required><?= htmlspecialchars($evaluation['commentaires']); ?></textarea>
+            <label for="commentaires" class="form-label">Commentaires</label>
+            <textarea name="commentaires" id="commentaires" class="form-control" rows="4" required><?= htmlspecialchars($evaluation['commentaires']); ?></textarea>
         </div>
 
         <button type="submit" class="btn btn-success">Mettre à jour</button>
         <a href="/stagiaire/<?= $stagiaire['id']; ?>/evaluations" class="btn btn-secondary">Annuler</a>
     </form>
 </div>
-
-<?php include_once __DIR__ . '/../partials/footer.php'; ?>

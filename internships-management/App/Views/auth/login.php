@@ -3,6 +3,7 @@
         <div class="col-md-6">
             <div class="card shadow-lg p-4 rounded">
                 <h2 class="text-center mb-4">Login to Your Account</h2>
+                <!-- <?php echo password_hash('123',PASSWORD_DEFAULT) ?> -->
 
                 <?php if (isset($error)): ?>
                     <div class="alert alert-danger" role="alert">

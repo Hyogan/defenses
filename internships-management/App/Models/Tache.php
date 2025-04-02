@@ -37,19 +37,6 @@ class Tache extends Model {
         return $db->fetchAll($sql,[$tuteurId]);
     }
 
-
-    // public static function assignTaskToStagiaire($stagiaireId, $taskData) {
-    //     // Créer une tâche pour un stagiaire
-    //     Task::add([
-    //         'stagiaire_id' => $stagiaireId,
-    //         'description' => $taskData['description'],
-    //         'deadline' => $taskData['deadline'],
-    //         'status' => 'en cours',
-    //         'tuteur_id' => $taskData['tuteur_id']
-    //     ]);
-    // }
-    
-
     /**
      * Mettre à jour le pourcentage et enregistrer l'historique
      */

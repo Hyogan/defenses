@@ -1,7 +1,6 @@
-<?php include_once __DIR__ . '/../partials/header.php'; ?>
 
 <div class="container mt-5">
-    <h2>Ajouter une évaluation pour <?= htmlspecialchars($stagiaire['nom'] . ' ' . $stagiaire['prenom']); ?></h2>
+    <h2>Ajouter une évaluation pour <strong><?= htmlspecialchars($stagiaire['nom'] . ' ' . $stagiaire['prenom']); ?></strong></h2>
 
     <?php if (!empty($error)): ?>
         <div class="alert alert-danger"><?= htmlspecialchars($error); ?></div>
@@ -15,7 +14,7 @@
         
         <div class="mb-3">
             <label for="commentaire" class="form-label">Commentaires</label>
-            <textarea name="commentaire" id="commentaire" class="form-control" rows="4" required></textarea>
+            <textarea name="commentaires" id="commentaires" class="form-control" rows="4" required></textarea>
         </div>
 
         <button type="submit" class="btn btn-success">Enregistrer</button>
@@ -23,4 +22,3 @@
     </form>
 </div>
 
-<?php include_once __DIR__ . '/../partials/footer.php'; ?>

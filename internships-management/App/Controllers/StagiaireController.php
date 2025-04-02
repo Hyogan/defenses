@@ -159,7 +159,7 @@ class StagiaireController extends Controller {
     public function delete($userId) {
         User::delete($userId);
         // Rediriger vers la liste des stagiaires
-        header("Location: /stagiaires");
+        return $this->redirect('/dashboard/stagiaires');
     }
 
     // Afficher les détails d'un stagiaire
@@ -175,7 +175,6 @@ class StagiaireController extends Controller {
     public function affectations() 
     {
       $affectations  = Affectation::getAllWithDetails();
-      // dd($stagiairesTuteurs);
       return $this->view("stagiaires/affectations", 
       ["affectations" => $affectations],
       "admin");

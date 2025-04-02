@@ -1,9 +1,9 @@
 <div class="container mt-4">
         <h1 class="mb-4">Gestion des Tâches et Stagiaires</h1>
-        <a href="/tache/ajouter">Ajouter une tache</a>
+        <a class="btn btn-primary my-2" href="/tache/ajouter">Ajouter une tache</a>
 
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="card shadow mb-4">
                     <div class="card-header d-flex align-items-center">
                         <i class="bi bi-list-task me-2"></i> Liste des Tâches
@@ -16,6 +16,9 @@
                                         <th>Tâche</th>
                                         <th>Stagiaire Assigné</th>
                                         <th>Statut</th>
+                                        <th>Pourcentage</th>
+                                        <th>Date limite</th>
+                                        <!-- <th></th> -->
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -33,6 +36,8 @@
                                                         <?= htmlspecialchars($tache['statut']) ?>
                                                     </span>
                                                 </td>
+                                                <td><?= htmlspecialchars($tache['nouveau_pourcentage']) ?></td>
+                                                <td><?= htmlspecialchars($tache['date_limite']) ?></td>
                                             </tr>
                                         <?php endforeach; ?>
                                     <?php endif; ?>
@@ -43,7 +48,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <!-- <div class="col-md-4">
                 <div class="card shadow">
                     <div class="card-header d-flex align-items-center">
                         <i class="bi bi-person-plus me-2"></i> Assigner une Tâche
@@ -70,6 +75,6 @@
                         </form>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>

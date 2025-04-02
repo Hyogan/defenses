@@ -62,11 +62,17 @@ class DashboardController extends Controller {
         if (!Auth::isTuteur()) {
             return $this->redirect('/dashboard');
         }
-        $taches = Tache::getByTuteur(Auth::id());
-        $evaluations = Evaluation::getByTuteur(Auth::id());
-        $stagiaires = Stagiaire::getByTuteurId(Auth::id());
-        // Logic spécifique au tuteur
-        $tachesAssignées = [];// récupérer les tâches assignées au tuteur
+        $tuteur = User::getById(Auth::id());
+        $id = $tuteur['tuteur']['id'];
+        $taches = Tache::getByTuteur($id);
+        $evaluations = Evaluation::getByTuteur($id);
+        $stagiaires = Stagiaire::getByTuteurId($id);
+        // dd($taches);
+        // dd([
+        //   'taches' => $taches,
+        //   'evaluations' => $evaluations,
+        //   'stagiaires' => $stagiaires
+        // ]);
         return $this->view('dashboard/tuteur', 
         [
           'taches' => $taches,

@@ -29,9 +29,10 @@
                                 <th>Nom</th>
                                 <th>Prénom</th>
                                 <th>Email</th>
-                                <th>Département</th>
+                                <!-- <th>Département</th> -->
                                 <th>Date de Début</th>
                                 <th>Date de Fin</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -45,9 +46,10 @@
                                         <td><?= htmlspecialchars($stagiaire['nom']) ?></td>
                                         <td><?= htmlspecialchars($stagiaire['prenom']) ?></td>
                                         <td><?= htmlspecialchars($stagiaire['email']) ?></td>
-                                        <td><?= htmlspecialchars($stagiaire['departement']) ?></td>
+                                        <!-- <td><?= htmlspecialchars($stagiaire['departement']) ?></td> -->
                                         <td><?= htmlspecialchars($stagiaire['date_debut']) ?></td>
                                         <td><?= htmlspecialchars($stagiaire['date_fin']) ?></td>
+                                        <td><a href="/evaluation/ajouter/<?=$stagiaire['id']?>">Evaluer</a></td>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php endif; ?>
