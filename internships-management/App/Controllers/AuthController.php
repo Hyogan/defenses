@@ -78,7 +78,7 @@ class AuthController extends Controller{
             }
             
             // Vérifier si le compte est actif
-            if ($user['statut'] !== 'actif') {
+            if ($user['statut'] !== 'active') {
                 $this->view('auth/login', [
                     'title' => 'Connexion | Internships Management',
                     'pageTitle' => 'Connexion',

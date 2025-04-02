@@ -66,7 +66,7 @@
               ],
             stagiaire: [
                 { title: "Dashboard", icon: "fas fa-tachometer-alt", link: "dashboard/stagiaire" },
-                { title: "Tâches", icon: "fas fa-tasks", link: "tasks/intern" },
+                { title: "Tâches", icon: "fas fa-tasks", link: "dashboard/stagiaire/taches" },
                 { title: "Evaluations", icon: "fas fa-folder-open", link: "stagiaire/evaluations" },
                 { title: "Deconnexion", icon: "fas fa-sign-out-alt", link: "auth/logout" }
               ],

@@ -60,7 +60,7 @@
                         </div>
                         
                         <input type="hidden" name="role" value="tuteur">
-                        <input type="hidden" name="statut" value="actif">
+                        <input type="hidden" name="statut" value="active">
                         
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <a href="/tuteurs" class="btn btn-secondary me-md-2">Annuler</a>

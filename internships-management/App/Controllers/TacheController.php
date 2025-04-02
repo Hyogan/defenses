@@ -24,17 +24,28 @@ class TacheController extends Controller{
 
     // Mise à jour du statut d'une tâche
     public function updateStatus($taskId) {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $status = $_POST['status'];
-            // Mettre à jour le statut de la tâche
-            Tache::updateTaskStatus($taskId, $status);
-            // Rediriger ou afficher un message
-            header("Location: /missions/{$taskId}");
-        }
-        // Afficher le formulaire pour changer le statut de la tâche
-        $task = Tache::getById($taskId);
-        require_once('views/missions/update_status.php');
-    }
+      if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+          $status = $_POST['status'];
+          Tache::updateTaskStatus($taskId, $status);
+          return $this->redirect('/dashboard/stagiaire');
+      } else {
+          // Optionally, fetch task details here if you need to display them in a form
+          // $task = Tache::getById($taskId);
+          return $this->redirect('/dashboard/stagiaire');
+      }
+  }
+  
+  public function updatePercentage($taskId) {
+      if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+          $percentage = $_POST['percentage'];
+          if($percentage > 100) $percentage = 100;
+          if($percentage < 0) $percentage = 0;
+          Tache::updatePourcentage($taskId, $percentage);
+          return $this->redirect('/dashboard/stagiaire');
+      } else {
+          return $this->redirect('/dashboard/stagiaire');
+      }
+  }
 
     // Afficher l'historique des tâches d'un stagiaire
     public function history($stagiaireId) {

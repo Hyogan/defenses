@@ -3,18 +3,38 @@ namespace App\Controllers;
 
 use Core\Controller;
 use App\Models\Auth;
+use App\Models\Stagiaire;
+use App\Models\Tuteur;
 use App\Models\User;
 use DateInterval;
 class UserController extends Controller{
 
+  public function modifier($id)
+  {
+      if(Auth::isAdmin()) {
+        $user = User::getById($id);
+        if($user['role'] == 'stagiaire') {
+          $stagiaire = Stagiaire::getByUserId($id);
+          return $this->redirect('/stagiaire/modifier/'.$id);
+        }
+        if($user['role'] == 'tuteur') {
+          $tuteur = Tuteur::getByUserId($id);
+          return $this->redirect('/tuteur/modifier/'.$tuteur['id']);
+        }
+      }
+     
+      dd($user);
+  }
+
   public function store() 
   {
+
     $data = [
       'nom' => 'nelson',
       'prenom' => 'arsene',
       'email' => 'nelson@gmail.com',
       'role' => 'stagiaire',
-      'statut' => 'actif',
+      'statut' => 'active',
       'mot_de_passe' => '123',
       'formation' => 'licence',
       'date_debut' => date_create('now')
@@ -35,7 +55,7 @@ class UserController extends Controller{
       'prenom' => 'arsene',
       'email' => 'tuteur@gmail.com',
       'role' => 'tuteur',
-      'statut' => 'actif',
+      'statut' => 'active',
       'mot_de_passe' => '123',
       'departement' => 'informatique',
       'poste' => 'dev backend',

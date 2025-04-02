@@ -1,129 +1,120 @@
 <style>
-    h1, h2 {
-        color: #333;
-    }
+        body {
+            background-color: #f8f9fa;
+        }
 
-    .task-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-        background-color: white;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
+        .dashboard-card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 10px;
+        }
 
-    .task-table th, .task-table td {
-        border: 1px solid #ddd;
-        padding: 12px 15px;
-        text-align: left;
-    }
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
 
-    .task-table th {
-        background-color: #f2f2f2;
-        font-weight: bold;
-    }
+        .dashboard-card .card-body {
+            padding: 2rem;
+        }
 
-    .task-table tr:nth-child(even) {
-        background-color: #f9f9f9;
-    }
+        .dashboard-card .card-title {
+            font-size: 1.5rem;
+            color: #343a40;
+            margin-bottom: 1rem;
+        }
 
-    .status-en-cours {
-        background-color: #e6f7ff;
-        color: #1890ff;
-        padding: 5px 10px;
-        border-radius: 5px;
-    }
+        .dashboard-card .card-text {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #007bff;
+        }
 
-    .status-termine {
-        background-color: #f6ffed;
-        color: #52c41a;
-        padding: 5px 10px;
-        border-radius: 5px;
-    }
+        .dashboard-header {
+            background: linear-gradient(to right, #007bff, #6610f2);
+            color: white;
+            padding: 2rem 0;
+            border-radius: 10px 10px 0 0;
+        }
 
-    .status-en-retard {
-        background-color: #fff1f0;
-        color: #ff4d4f;
-        padding: 5px 10px;
-        border-radius: 5px;
-    }
+        .dashboard-header h2 {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
 
-    .priority-high {
-        color: #ff4d4f;
-        font-weight: bold;
-    }
+    <div class="container mt-5">
+        <div class="dashboard-header text-center mb-4">
+            <h2>Stagiaire Dashboard</h2>
+        </div>
 
-    .priority-medium {
-        color: #faad14;
-    }
+        <div class="row justify-content-center">
+            <div class="col-md-4 mb-4">
+                <div class="card dashboard-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Nombre de Tâches</h5>
+                        <?php
+                        echo "<p class='card-text'>" . count($tachesEnCours) . "</p>";
+                        ?>
+                    </div>
+                </div>
+            </div>
 
-    .priority-low {
-        color: #52c41a;
-    }
+            <div class="col-md-4 mb-4">
+                <div class="card dashboard-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Nombre de Tuteurs</h5>
+                        <?php
+                        echo "<p class='card-text'>" . $tuteurCount . "</p>";
+                        ?>
+                    </div>
+                </div>
+            </div>
 
-    .action-buttons {
-        display: flex;
-        gap: 5px;
-    }
+            <div class="col-md-4 mb-4">
+                <div class="card dashboard-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Nombre d'Évaluations</h5>
+                        <?php
+                        echo "<p class='card-text'>" . $evaluationCount . "</p>";
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    .action-buttons button {
-        padding: 5px 10px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
+    <div class="container mt-4">
+    <h2 class="mb-3">Tâches en cours</h2>
 
-    .action-buttons button.update-status {
-        background-color: #1890ff;
-        color: white;
-    }
-
-    .action-buttons button.update-percentage {
-        background-color: #52c41a;
-        color: white;
-    }
-</style>
-
-<h1>Tableau de bord Stagiaire</h1>
-<h2>Tâches en cours</h2>
-
-<?php if (empty($tachesEnCours)): ?>
-    <p>Aucune tâche en cours.</p>
-<?php else: ?>
-    <table class="task-table">
-        <thead>
-            <tr>
-                <th>Titre</th>
-                <th>Description</th>
-                <th>Date Limite</th>
-                <th>Statut</th>
-                <th>Priorité</th>
-                <th>Assigné à</th>
-                <th>Pourcentage</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($tachesEnCours as $tache): ?>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead class="thead-light">
                 <tr>
-                    <td><?= htmlspecialchars($tache['titre']) ?></td>
-                    <td><?= htmlspecialchars($tache['description']) ?></td>
-                    <td><?= htmlspecialchars($tache['date_limite']) ?></td>
-                    <td class="status-<?= htmlspecialchars(strtolower($tache['statut'])) ?>"><?= htmlspecialchars($tache['statut']) ?></td>
-                    <td class="priority-<?= htmlspecialchars(strtolower($tache['priorite'])) ?>"><?= htmlspecialchars($tache['priorite']) ?></td>
-                    <td><?= htmlspecialchars($tache['assigne_a']) ?></td>
-                    <td><?= htmlspecialchars($tache['pourcentage']) ?>%</td>
-                    <td class="action-buttons">
-                        <form method="post" action="update_status.php">
-                            <input type="hidden" name="task_id" value="<?= htmlspecialchars($tache['id']) ?>">
-                            <button type="submit" class="update-status">Statut</button>
-                        </form>
-                        <form method="post" action="update_percentage.php">
-                            <input type="hidden" name="task_id" value="<?= htmlspecialchars($tache['id']) ?>">
-                            <button type="submit" class="update-percentage">Avancement</button>
-                        </form>
-                    </td>
+                    <th>Titre</th>
+                    <th>Description</th>
+                    <th>Date Limite</th>
+                    <th>Statut</th>
+                    <th>Pourcentage</th>
                 </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-<?php endif; ?>
+            </thead>
+            <tbody>
+                <?php 
+                    $firstTenTasks = array_slice($tachesEnCours, 0, 10); // Get the first 10 items
+                    foreach ($firstTenTasks as $tache):
+                ?>
+                    <tr>
+                        <td><?= htmlspecialchars($tache['titre']) ?></td>
+                        <td><?= htmlspecialchars($tache['description']) ?></td>
+                        <td><?= htmlspecialchars($tache['date_limite']) ?></td>
+                        <td class="status-<?= htmlspecialchars(strtolower($tache['statut'])) ?>">
+                            <?= htmlspecialchars($tache['statut']) ?>
+                        </td>
+                        <td><?= htmlspecialchars($tache['nouveau_pourcentage']) ?>%</td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>

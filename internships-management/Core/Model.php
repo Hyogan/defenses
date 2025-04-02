@@ -34,7 +34,7 @@ class Model {
      */
     public static function create($data) {
         $table = static::$table;
-        
+
         $columns = implode(', ', array_keys($data));
         $placeholders = implode(', ', array_fill(0, count($data), '?'));
         
@@ -42,7 +42,7 @@ class Model {
         $db = Database::getInstance();
 
         $db->query($sql, array_values($data));
-        return self::$db->getConnection()->lastInsertId();
+        return $db->getConnection()->lastInsertId();
     }
 
     public static function Count() 

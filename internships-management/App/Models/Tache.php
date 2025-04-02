@@ -40,19 +40,26 @@ class Tache extends Model {
     /**
      * Mettre à jour le pourcentage et enregistrer l'historique
      */
-    public function updatePourcentage($nouveauPourcentage) {
-        $ancienPourcentage = $this->pourcentage;
+    public static function updatePourcentage($taskId,$nouveauPourcentage) {
+        $db = Database::getInstance();
+        $tache = self::getById($taskId);
+        $query = "
+            UPDATE taches 
+            SET ancien_pourcentage = ?,
+            nouveau_pourcentage = ?
+            WHERE id = ?
+          ";
+          // dd($tache);
+        $ancienPourcentage = $tache['nouveau_pourcentage'];
+        $params = [$ancienPourcentage,$nouveauPourcentage, $taskId];
         if ($nouveauPourcentage !== $ancienPourcentage) {
-            // Mettre à jour la tâche
-            self::update($this->id, ['pourcentage' => $nouveauPourcentage]);
-
-            // Insérer dans l'historique
             HistoriqueProgression::create([
-                'tache_id' => $this->id,
-                'stagiaire_id' => $this->stagiaire_id,
+                'tache_id' => $tache['id'],
+                'stagiaire_id' => $tache['stagiaire_id'],
                 'ancien_pourcentage' => $ancienPourcentage,
                 'nouveau_pourcentage' => $nouveauPourcentage
             ]);
+            return $db->query($query, $params);
         }
     }
 

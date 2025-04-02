@@ -19,9 +19,11 @@ $routes = [
     '/auth/register' => [AuthController::class, 'register'],
     '/auth/logout' => [AuthController::class, 'logout'],
     '/user/store' => [UserController::class, 'store'],
+    '/utilisateur/modifier/{id}' => [UserController::class, 'modifier'],
     
     // Routes pour la gestion des stagiaires
     '/dashboard/stagiaires' => [StagiaireController::class, 'index'],
+    '/dashboard/stagiaire/taches' => [StagiaireController::class, 'taches'],
     '/dashboard/affectations' => [StagiaireController::class, 'affectations'],
     '/stagiaire/ajouter' => [StagiaireController::class, 'create'],
     '/stagiaire/store' => [StagiaireController::class, 'store'],
@@ -50,6 +52,8 @@ $routes = [
     '/tache/store' => [TacheController::class, 'store'],
     '/tache/modifier/{id}' => [TacheController::class, 'modifier'],
     '/tache/supprimer/{id}' => [TacheController::class, 'supprimer'],
+    '/tache/update_status/{id}' => [TacheController::class, 'updateStatus'],
+    '/tache/update_percentage/{id}' => [TacheController::class, 'updatePercentage'],
     
     // Routes pour la gestion des documents
     '/documents' => [DocumentController::class, 'index'],

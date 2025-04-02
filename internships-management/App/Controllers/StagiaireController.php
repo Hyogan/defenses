@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Models\Stagiaire;
 use App\Models\Tuteur;
 use App\Models\Affectation;
+use App\Models\Auth;
+use App\Models\Tache;
 use Core\Controller;
 use App\Models\User;
 
@@ -18,6 +20,28 @@ class StagiaireController extends Controller {
         "stagiaires" => $stagiaires
       ],"admin");
   }
+
+  public function taches() 
+  {
+          if (!Auth::isLoggedIn()) {
+            return $this->redirect('/auth/login');
+        }
+        
+        if (!Auth::isStagiaire()) {
+            return $this->redirect('/dashboard');
+        }
+        $user = User::getById(Auth::id());
+        // dd($stagiaire);
+        $tachesEnCours = Tache::getByStagiaire($user['stagiaire']['id']);// récupérer les tâches en cours du stagiaire
+        // dd($tachesEnCours);
+        return $this->view(
+          'stagiaires/taches',
+          [
+            'tachesEnCours' => $tachesEnCours,
+            'pageTitle' => 'Dashboard stagiaire'
+            ],
+        'admin');
+}
 
     // Création d'un stagiaire
     public function create() 
@@ -185,8 +209,8 @@ class StagiaireController extends Controller {
      */
     public function assignTuteurs($stagiaireId) {
         // Récupérer les informations du stagiaire
+        // dd($stagiaireId);
         $stagiaire = Stagiaire::getById($stagiaireId);
-        
         if (!$stagiaire) {
             flash("error", "Stagiaire non trouvé.");
             return $this->redirect("/dashboard/stagiaires");
@@ -204,6 +228,7 @@ class StagiaireController extends Controller {
         }
         // dd($assignedTuteurIds);
         $pageTitle = 'Assigner des tuteurs';
+        // dd($stagiaire);
         return $this->view("stagiaires/assign_tuteurs", [
             'stagiaire' => $stagiaire,
             'tuteurs' => $tuteurs,

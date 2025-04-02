@@ -60,7 +60,7 @@
                         <div class="mb-3">
                             <label for="statut" class="form-label">Statut</label>
                             <select class="form-select" id="statut" name="statut">
-                                <option value="actif" <?= $tuteur['statut'] === 'actif' ? 'selected' : '' ?>>Actif</option>
+                                <option value="active" <?= $tuteur['statut'] === 'active' ? 'selected' : '' ?>>Actif</option>
                                 <option value="inactif" <?= $tuteur['statut'] === 'inactif' ? 'selected' : '' ?>>Inactif</option>
                             </select>
                         </div>

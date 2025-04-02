@@ -51,7 +51,7 @@
             <label for="date_fin">Date de fin:</label>
             <select class="form-control id="statut" name="statut" value="<?= isset($data['statut']) ? $data['statut'] : '' ?>" required>
                   <option value="active">Actif</option>
-                  <option value="active">Inactif</option>
+                  <option value="inactive">Inactif</option>
             </select>
             <?php if (isset($errors['statut'])) : ?>
                 <div class="invalid-feedback"><?= $errors['statut'] ?></div>

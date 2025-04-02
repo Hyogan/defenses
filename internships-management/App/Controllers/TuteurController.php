@@ -69,7 +69,7 @@ class TuteurController extends Controller{
         
         // Si le statut n'est pas défini, on le définit comme actif
         if(!isset($data['statut']) || empty($data['statut'])) {
-          $data['statut'] = 'actif';
+          $data['statut'] = 'active';
         }
         
         // S'il y a des erreurs, on les affiche

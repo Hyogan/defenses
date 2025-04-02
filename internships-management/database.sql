@@ -109,3 +109,18 @@ CREATE TABLE evaluations (
     FOREIGN KEY (tuteur_id) REFERENCES tuteurs(id)
 );
 
+
+CREATE TABLE historique_progression (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    stagiaire_id INT NOT NULL,
+    tache_id INT NOT NULL,
+    ancien_pourcentage INT NOT NULL CHECK (ancien_pourcentage BETWEEN 0 AND 100),
+    nouveau_pourcentage INT NOT NULL CHECK (nouveau_pourcentage BETWEEN 0 AND 100),
+    date_modification TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (stagiaire_id) REFERENCES stagiaires(id),
+    FOREIGN KEY (tache_id) REFERENCES taches(id)
+);
+
+nelson@gmail.com 123 admin
+johndoe@gmail.com 123456 tuteur
+casmith@gmail.com 123456 stagiaire

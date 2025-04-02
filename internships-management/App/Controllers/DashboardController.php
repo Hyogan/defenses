@@ -18,9 +18,6 @@ class DashboardController extends Controller {
             return $this->redirect('/auth/login');
         }
         
-        // Redirect based on role
-        // dd(Auth::isStagiaire());
-        // dd(Auth::getUserType());
         if (Auth::isAdmin()) {
             return $this->redirect('/dashboard/admin');
         } elseif (Auth::isSuperviseur()) {
@@ -36,7 +33,8 @@ class DashboardController extends Controller {
     }
 
     // Tableau de bord pour les Superviseurs
-    public function superviseur() {
+    public function superviseur() 
+    {
         // Vérification du rôle de l'utilisateur (Superviseur)
         if (!Auth::isLoggedIn()) {
             return $this->redirect('/auth/login');
@@ -91,13 +89,18 @@ class DashboardController extends Controller {
         if (!Auth::isStagiaire()) {
             return $this->redirect('/dashboard');
         }
-        
-        $stagiaireId = Stagiaire::getByUserId(Auth::id()); 
-        // dd($stagiaireId);
-        $tachesEnCours = Tache::getByStagiaire($stagiaireId['id']);// récupérer les tâches en cours du stagiaire
+        $user = User::getById(Auth::id());
+        $stagiaireId = $user['stagiaire']['id'];
+        $tachesEnCours = Tache::getByStagiaire($stagiaireId);// récupérer les tâches en cours du stagiaire
+        // $tachesCount = count($tachesEnCours);
+        $tuteurCount  = count(Tuteur::getByStagiaire($stagiaireId));
+        $evaluationCount = count(Evaluation::getByStagiaire($stagiaireId));
+        // dd(Tuteur::getByStagiaire($stagiaireId));
         return $this->view(
           'dashboard/stagiaire',
           [
+            'tuteurCount' => $tuteurCount,
+            'evaluationCount' => $evaluationCount,
             'tachesEnCours' => $tachesEnCours,
             'pageTitle' => 'Dashboard stagiaire'
             ],

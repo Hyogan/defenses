@@ -129,7 +129,7 @@
                             <td><?= htmlspecialchars($user['email']) ?></td>
                             <td><?= htmlspecialchars($user['role']) ?></td>
                             <td>
-                                <a href="/admin/editUser/<?= $user['id'] ?>" class="btn btn-sm btn-primary">Modifier</a>
+                                <a href="/utilisateur/modifier/<?= $user['id'] ?>" class="btn btn-sm btn-primary">Modifier</a>
                                 <button class="btn btn-sm btn-danger delete-user" data-user-id="<?= $user['id'] ?>">Supprimer</button>
                             </td>
                         </tr>

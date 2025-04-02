@@ -91,10 +91,22 @@ class Stagiaire extends Model {
    */
   public static function getById($stagiaireId)
    {
-      $sql = "SELECT stagiaires.*, utilisateurs.* 
-              FROM stagiaires 
-              JOIN utilisateurs ON stagiaires.utilisateur_id = utilisateurs.id 
-              WHERE stagiaires.id = ?";
+      $sql = "SELECT 
+              s.id, 
+              s.utilisateur_id,
+              s.date_debut,
+              s.formation,
+              s.date_fin,
+              s.date_creation,
+              u.nom,
+              u.prenom,
+              u.email,
+              u.role,
+              u.statut,
+              u.date_modification
+              FROM stagiaires s
+              JOIN utilisateurs u ON s.utilisateur_id = u.id 
+              WHERE s.id = ?";
       $db = Database::getInstance();
       return $db->fetchAll($sql, [$stagiaireId]);
   }
@@ -103,6 +115,8 @@ class Stagiaire extends Model {
   {
     $sql = "SELECT
     s.*,
+    s.date_debut,
+    s.date_fin,
     u.nom AS nom_stagiaire,
     u.prenom AS prenom_stagiaire,
     u.email AS email_stagiaire,
@@ -154,9 +168,9 @@ foreach ($results as $row) {
 // Nettoyer les données redondantes de la première ligne
 unset($stagiaire['id']);
 unset($stagiaire['utilisateur_id']);
-unset($stagiaire['formation']);
-unset($stagiaire['date_debut']);
-unset($stagiaire['date_fin']);
+// unset($stagiaire['formation']);
+// unset($stagiaire['date_debut']);
+// unset($stagiaire['date_fin']);
 unset($stagiaire['date_creation']);
 
 

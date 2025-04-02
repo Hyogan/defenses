@@ -54,7 +54,7 @@ class User extends Model {
             $data['email'],
             password_hash($data['mot_de_passe'], PASSWORD_DEFAULT),
             $data['role'] ?? $role,
-            $data['statut'] ?? 'actif'
+            $data['statut'] ?? 'active'
         ];
         
         $db->query($query, $params);
@@ -141,7 +141,7 @@ class User extends Model {
             $data['email'],
             $data['role'],
             password_hash($data['mot_de_passe'], PASSWORD_DEFAULT),
-            $data['statut'] ?? 'actif',
+            $data['statut'] ?? 'active',
             $id
         ];
         
