@@ -24,7 +24,7 @@ $currentPage = $currentPage ?? '';
     <?php endif; ?>
     <style>
          header.navbar {
-            background-color: var(--secondary-color); Use CSS variable 
+            background-color: var(--secondary-color); 
         }
 
         /* header.navbar .navbar-brand {

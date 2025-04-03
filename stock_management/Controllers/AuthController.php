@@ -19,7 +19,8 @@ class AuthController extends Controller{
         if (Auth::isLoggedIn()) {
           $this->redirect('/dashboard');
         }
-        $this->view('auth/login', [
+        $this->view('auth/login', 
+        [
           'pageTitle' => 'Connexion'
       ],'auth');
     }
