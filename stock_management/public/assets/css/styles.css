@@ -1,0 +1,190 @@
+/**
+ * Feuille de style principale pour l'application Admin Elect
+ * À placer dans /public/assets/css/styles.css
+ */
+
+/* ===== RESET ET STYLES DE BASE ===== */
+* {
+  margin: 0 ;
+  padding: 0;
+  box-sizing: border-box ;
+}
+body {
+  min-height: 100vh;
+  background-color: var(--background-color) !important;
+  color: var(--text-color) !important;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+:root {
+  --primary-color: #ff6b6b !important;
+  --secondary-color: #2c3e50 !important;
+  --background-color: #f0f8ff !important;
+  --text-color: #34495e !important;
+  --accent-color: #ffcc80 !important;
+  --error-color: #ffebee !important;
+  --error-text-color: #d32f2f !important;
+  --card-bg-color: #ffffff !important;
+  --input-border-color: #e0e0e0 !important;
+}
+
+.bgx-primary{
+  background: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+}
+
+.container-fluid {
+  padding: 2rem !important;
+}
+
+.card {
+  border-radius: 10px !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+  border: 1px solid #e0e0e0 !important;
+}
+
+.card-header {
+  background-color: #f8f8f8 !important;
+  border-bottom: 1px solid #e0e0e0 !important;
+}
+
+.card-header .text-primary {
+  color: var(--primary-color) !important;
+}
+
+.card-body {
+  padding: 1rem !important;
+}
+
+.btn-success {
+  background-color: #28a745 !important;
+  border-color: #28a745 !important;
+}
+
+.btn-success:hover {
+  background-color: #218838 !important;
+  border-color: #1e7e34 !important;
+}
+
+.btn-primary {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+}
+
+.btn-primary:hover {
+  background-color: #e65a5a !important;
+  border-color: #e65a5a !important;
+}
+
+.btn-info {
+  background-color: #17a2b8 !important;
+  border-color: #17a2b8 !important;
+}
+
+.btn-info:hover {
+  background-color: #138496 !important;
+  border-color: #117a8b !important;
+}
+
+.btn-danger {
+  background-color: #dc3545 !important;
+  border-color: #dc3545 !important;
+}
+
+.btn-danger:hover {
+  background-color: #c82333 !important;
+  border-color: #bd2130 !important;
+}
+
+.btn-outline-primary {
+  color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--primary-color) !important;
+  color: white !important;
+}
+
+.btn-outline-success {
+  color: #28a745 !important;
+  border-color: #28a745 !important;
+}
+
+.btn-outline-success:hover {
+  background-color: #28a745 !important;
+  color: white !important;
+}
+
+.table {
+  margin-top: 1rem !important;
+}
+
+.table th, .table td {
+  padding: 0.6rem !important;
+  vertical-align: top !important;
+  border-top: 1px solid #e0e0e0 !important;
+}
+
+.table thead th {
+  vertical-align: bottom !important;
+  border-bottom: 2px solid #e0e0e0 !important;
+}
+
+.table tbody + tbody {
+  border-top: 2px solid #e0e0e0 !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.text-danger {
+  color: var(--error-text-color) !important;
+}
+
+.text-xs.font-weight-bold {
+  font-size: 0.8rem !important;
+  text-transform: uppercase !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.text-gray-800 {
+  color: var(--text-color) !important;
+}
+
+.text-gray-300 {
+  color: #d1d1d1 !important;
+}
+
+.alert-success {
+  background-color: #d4edda !important;
+  border-color: #c3e6cb !important;
+  color: #155724 !important;
+}
+
+.alert-danger {
+  background-color: #f8d7da !important;
+  border-color: #f5c6cb !important;
+  color: #721c24 !important;
+}
+
+.form-control {
+  border-radius: 5px !important;
+  border: 1px solid #e0e0e0 !important;
+}
+
+.form-control:focus {
+  border-color: var(--primary-color) !important;
+  box-shadow: 0 0 0 0.2rem rgba(var(--primary-color-rgb), 0.25) !important;
+}
+
+.badge-success {
+  background-color: #28a745 !important;
+  color: white !important;
+}
+
+.badge-danger {
+  background-color: #dc3545 !important;
+  color: white !important;
+}
