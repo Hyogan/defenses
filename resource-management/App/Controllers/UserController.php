@@ -37,6 +37,11 @@ class UserController extends Controller {
             }
         }
     }
+    public function show($id) 
+    {
+      $user = User::getById($id);
+      return $this->view('users/details',['userInfo' => $user], 'admin');
+    }
 
     public function edit($id) {
         $this->checkAuth();

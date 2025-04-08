@@ -11,7 +11,7 @@ class AuthController extends Controller{
             $this->redirect('/dashboard');
         }
         $this->view('auth/login',[
-            'title' => 'Connexion | Gestion de lignes',
+            'title' => 'Connexion | Gestion de Composants et de rebus',
             'pageTitle' => 'Connexion'
         ],'auth');
     }
@@ -35,7 +35,7 @@ class AuthController extends Controller{
 
           if (!empty($errors)) {
               return $this->view('auth/login', [
-                  'title' => 'Connexion | Gestion de lignes',
+                  'title' => 'Connexion | Gestion de Composants et de rebus',
                   'pageTitle' => 'Connexion',
                   'email' => $email,
                   'errors' => $errors
@@ -46,7 +46,7 @@ class AuthController extends Controller{
 
           if (!$user) {
               return $this->view('auth/login', [
-                  'title' => 'Connexion  | Gestion de lignes',
+                  'title' => 'Connexion  | Gestion de Composants et de rebus',
                   'pageTitle' => 'Connexion',
                   'email' => $email,
                   'error' => 'Identifiants incorrects'
@@ -54,19 +54,19 @@ class AuthController extends Controller{
           }
 
           // Check if the account is active FIRST
-          if ($user['statut'] !== 'actif') {
-               return $this->view('auth/login', [
-                  'title' => 'Connexion | Gestion de lignes',
-                  'pageTitle' => 'Connexion',
-                  'email' => $email,
-                  'error' => 'Votre compte est désactivé'
-              ],'auth');
-          }
+          // if ($user['statut'] !== 'actif') {
+          //      return $this->view('auth/login', [
+          //         'title' => 'Connexion | Gestion de lignes',
+          //         'pageTitle' => 'Connexion',
+          //         'email' => $email,
+          //         'error' => 'Votre compte est désactivé'
+          //     ],'auth');
+          // }
 
           // THEN, authenticate the user
            if (!Auth::authenticate($email, $password)) {
               return $this->view('auth/login', [
-                  'title' => 'Connexion | Gestion de lignes',
+                  'title' => 'Connexion | Gestion de Composants et de rebus',
                   'pageTitle' => 'Connexion',
                   'email' => $email,
                   'error' => 'Identifiants incorrects'
@@ -74,8 +74,8 @@ class AuthController extends Controller{
           }
 
           // Connect the user
-          $_SESSION['user_id'] = $user['id'];
-          $_SESSION['user_name'] = $user['prenom'] . ' ' . $user['nom'];
+          $_SESSION['user_id'] = $user['id_utilisateur'];
+          $_SESSION['user_name'] = $user['nom_complet'];
           $_SESSION['user_email'] = $user['email'];
           $_SESSION['logged_in'] = true;
           $_SESSION['user_role'] = $user['role'];
@@ -115,7 +115,7 @@ class AuthController extends Controller{
         }
         
         $this->view('auth/reset_password', [
-            'title' => 'Réinitialisation du mot de passe | Gestion de lignes',
+            'title' => 'Réinitialisation du mot de passe | Gestion de Composants et de rebuss',
             'pageTitle' => 'Réinitialisation du mot de passe'
         ],'auth');
     }

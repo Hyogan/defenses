@@ -17,9 +17,9 @@
                 <?php foreach ($affectations as $affectation): ?>
                     <tr>
                         <td><?= $affectation['id_affectation'] ?></td>
-                        <td><?= $affectation['id_materiel'] ?></td>
-                        <td><?= $affectation['id_laboratoire'] ?></td>
-                        <td><?= $affectation['id_service'] ?></td>
+                        <td><?= $affectation['nom_materiel'] ?></td>
+                        <td><?= $affectation['nom_labo']?>(<?= $affectation['num_labo'] ?>)</td>
+                        <td><?= $affectation['nom_service'] ?></td>
                         <td><?= $affectation['date_affectation'] ?></td>
                         <td><?= $affectation['date_fin_affectation'] ?></td>
                         <td>

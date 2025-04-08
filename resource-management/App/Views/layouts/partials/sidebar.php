@@ -44,7 +44,9 @@
         }
         img{
           width: 80px;
-          height: auto;
+          height: 80px;
+          /* height: auto; */
+          object-fit: cover;
           border-radius: 50%;
         }
 
@@ -52,7 +54,7 @@
   <nav id="sidebarMenu" style="height: 100%; height: 100vh;" class="sticky col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
           <div class="top-block">
             <h1 class="h1">Camrail</h1>
-            <img src="/logo-camrail.jpeg" alt="Logo Camrails">
+            <img src="/logo-iug.png" alt="Logo Camrails">
             <h2 class="h5">Gestion Lignes</h2>
           </div>
             <ul id="menu">
@@ -61,8 +63,8 @@
 
     <script>
       const menuData = {
-              admin: [
-                  { title: "Dashboard", icon: "fas fa-tachometer-alt", link: "dashboard/admin" },
+              technicien: [
+                  { title: "Dashboard", icon: "fas fa-tachometer-alt", link: "dashboard/technicien" },
                   { title: "Utilisateurs", icon: "fas fa-users", link: "users" }, // Updated link
                   { title: "Catégories", icon: "fas fa-tags", link: "categories" }, // New link
                   { title: "Laboratoires", icon: "fas fa-flask", link: "laboratories" }, // New link
@@ -70,8 +72,6 @@
                   { title: "Matériels", icon: "fas fa-desktop", link: "materials" }, // New link
                   { title: "Rebus", icon: "fas fa-trash-alt", link: "rebus" }, // New link
                   { title: "Affectations", icon: "fas fa-link", link: "affectations" }, // New link
-                  { title: "Lignes", icon: "fas fa-folder-open", link: "lignes" },
-                  { title: "Logs", icon: "fas fa-history", link: "dashboard/logs" }, // Updated icon
                   { title: "Déconnexion", icon: "fas fa-sign-out-alt", link: "auth/logout" },
               ],
               classic: [

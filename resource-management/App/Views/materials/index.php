@@ -19,7 +19,7 @@
                         <td><?= $material['nom'] ?></td>
                         <td><?= $material['description'] ?></td>
                         <td><?= $material['model'] ?></td>
-                        <td><?= $material['id_categorie'] ?></td>
+                        <td><?= $material['nom_categorie'] ?></td>
                         <td>
                             <a href="/materials/edit/<?= $material['id_materiel'] ?>" class="btn btn-sm btn-warning">Modifier</a>
                             <a href="/materials/delete/<?= $material['id_materiel'] ?>" class="btn btn-sm btn-danger">Supprimer</a>

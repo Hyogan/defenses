@@ -7,17 +7,17 @@
                 <div class="card-body text-center">
                     <h5 class="card-title text-primary">Utilisateurs</h5>
                     <p class="card-text"><i class="bi bi-people me-2"></i>Nombre total: <?= $userCount ?></p>
-                    <a href="/user/management" class="btn btn-outline-primary">Gérer</a>
+                    <a href="/users" class="btn btn-outline-primary">Gérer</a>
                 </div>
             </div>
         </div>
 
         <div class="col">
             <div class="card h-100 shadow">
-                <div class="card-body text-center">
-                    <h5 class="card-title text-success">Lignes</h5>
-                    <p class="card-text"><i class="bi bi-person-workspace me-2"></i>Nombre total: <?= $lignesCount ?></p>
-                    <a href="/lignes" class="btn btn-outline-success">Gérer</a>
+                <div class="card-body text-success text-center">
+                    <h5 class="card-title text-success">Matériels</h5>
+                    <p class="card-text"><i class="bi bi-pc-display me-2"></i>Nombre total: <?= $materialCount ?></p>
+                    <a href="/materials" class="btn btn-outline-success">Gérer</a>
                 </div>
             </div>
         </div>
@@ -26,7 +26,7 @@
             <div class="card h-100 shadow">
                 <div class="card-body text-info text-center">
                     <h5 class="card-title text-info">Activités Récentes</h5>
-                    <p class="card-text"><i class="bi bi-person-video2 me-2"></i>Dernières activités</p>
+                    <p class="card-text"><i class="bi bi-activity me-2"></i>Dernières activités</p>
                     <a href="/dashboard/logs" class="btn btn-outline-info">Gérer</a>
                 </div>
             </div>
@@ -51,7 +51,7 @@
                             <tbody>
                                 <?php foreach ($allUsers as $user): ?>
                                     <tr>
-                                        <td><?= htmlspecialchars($user['nom']) ?> <?= htmlspecialchars($user['prenom']) ?></td>
+                                        <td><?= htmlspecialchars($user['nom_complet']) ?></td>
                                         <td><?= htmlspecialchars($user['email']) ?></td>
                                         <td><?= htmlspecialchars($user['role']) ?></td>
                                         <td><?= htmlspecialchars($user['date_creation']) ?></td>
@@ -93,8 +93,7 @@
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th>Nom</th>
-                    <th>Prénom</th>
+                    <th>Nom Complet</th>
                     <th>Email</th>
                     <th>Rôle</th>
                     <th>Actions</th>
@@ -103,13 +102,12 @@
             <tbody>
                 <?php foreach ($allUsers as $user): ?>
                     <tr>
-                        <td><?= htmlspecialchars($user['nom']) ?></td>
-                        <td><?= htmlspecialchars($user['prenom']) ?></td>
+                        <td><?= htmlspecialchars($user['nom_complet']) ?></td>
                         <td><?= htmlspecialchars($user['email']) ?></td>
                         <td><?= htmlspecialchars($user['role']) ?></td>
                         <td>
-                            <a href="/admin/editUser/<?= $user['id'] ?>" class="btn btn-sm btn-primary">Modifier</a>
-                            <button class="btn btn-sm btn-danger delete-user" data-user-id="<?= $user['id'] ?>">Supprimer</button>
+                            <a href="/users/edit/<?= $user['id_utilisateur'] ?>" class="btn btn-sm btn-primary">Modifier</a>
+                            <button class="btn btn-sm btn-danger delete-user" data-user-id="<?= $user['id_utilisateur'] ?>">Supprimer</button>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -126,7 +124,7 @@
             button.addEventListener('click', function() {
                 const userId = this.getAttribute('data-user-id');
                 if (confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur?")) {
-                    fetch('/admin/deleteUser/' + userId, {
+                    fetch('/users/delete/' + userId, {
                         method: 'DELETE'
                     })
                     .then(response => {

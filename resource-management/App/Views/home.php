@@ -1,7 +1,7 @@
 <style>
     /* Personnalisation des couleurs */
     .navbar {
-        background-color: #f30f20; /* Couleur rouge */
+        background-color: #343a40; /* Gris foncé pour la barre de navigation */
     }
 
     .navbar-brand img {
@@ -18,17 +18,18 @@
     }
 
     .navbar-nav .nav-link:hover {
-        color: #f30f20 !important; /* Couleur rouge au survol des liens */
+        color: #17a2b8 !important; /* Couleur cyan au survol des liens */
     }
 
     .btn-custom {
-        background-color: #f30f20;
+        background-color: #17a2b8; /* Couleur cyan pour le bouton */
         color: white;
     }
 
     .btn-custom:hover {
         background-color: white;
-        color: #f30f20;
+        color: #17a2b8;
+        border: 1px solid #17a2b8; /* Ajout d'une bordure au survol */
     }
 </style>
 </head>
@@ -36,7 +37,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand" href="/">
-                <img src="logo-camrail.jpeg" alt="Logo Camrails">
+                <img src="logo-iug.png" alt="Logo Camrails">
                 Gestion de Matériel et Laboratoires
             </a>
         </div>

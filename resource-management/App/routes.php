@@ -42,6 +42,7 @@ $routes = [
     '/users/edit/{id}' => [UserController::class, 'edit'],
     '/users/update/{id}' => [UserController::class, 'update'],
     '/users/delete/{id}' => [UserController::class, 'delete'],
+    '/users/details/{id}' => [UserController::class, 'show'],
 
     // Routes pour la gestion des catégories
     '/categories' => [CategoryController::class, 'index'],
@@ -97,9 +98,8 @@ $routes = [
     // Routes pour les tableaux de bord (selon le rôle)
     '/dashboard' => [DashboardController::class, 'index'],
     '/dashboard/classic' => [DashboardController::class, 'classic'],
-    '/dashboard/admin' => [DashboardController::class, 'admin'],
-    '/dashboard/logs' => [DashboardController::class, 'logs'],
+    '/dashboard/technicien' => [DashboardController::class, 'technicien'],
+    // '/dashboard/logs' => [DashboardController::class, 'logs'],
 ];
 
 return $routes;
-?>

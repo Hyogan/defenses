@@ -20,25 +20,14 @@ class Auth{
         $user = $db->fetch("SELECT * FROM utilisateurs WHERE email = ?", [$email]);
         // dd([$user, $password]);
         if ($user && password_verify($password,$user['mot_de_passe'])) {
-            Log::create([
-                'userId' => $user['id'],  // Use the user ID of the logged-in user
-                'action' => 'Authentification utilisateur',
-                'message' => 'Connexion réussie pour l\'utilisateur avec l\'email : ' . $email
-            ]);
             // Store user information in the session
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['username'] = $user['nom'];
+            // dd($user);
+            $_SESSION['user_id'] = $user['id_utilisateur'];
+            $_SESSION['username'] = $user['nom_complet'];
             $_SESSION['user_role'] = $user['role'];
             $_SESSION['logged_in'] = true;
             return $user;
         }
-        
-        // Log the failed login attempt
-        Log::create([
-            'userId' => null,  // No authenticated user for failed login
-            'action' => 'Authentification utilisateur',
-            'message' => 'Tentative de connexion échouée pour l\'email : ' . $email
-        ]);
 
         return null;
     }
@@ -48,14 +37,6 @@ class Auth{
         $db = Database::getInstance();
         $query = "UPDATE utilisateurs SET mot_de_passe = ? WHERE id = ?";
         $params = [password_hash($newPassword, PASSWORD_DEFAULT), $id];
-        
-        // Log the password reset action
-        Log::create([
-            'userId' => Auth::id(),  // Get the authenticated user's ID
-            'action' => 'Réinitialisation du mot de passe',
-            'message' => 'Réinitialisation du mot de passe pour l\'utilisateur avec l\'ID : ' . $id
-        ]);
-
         return $db->query($query, $params);
     }
 
@@ -104,13 +85,6 @@ class Auth{
      * Déconnecter l'utilisateur
      */
     public function logout() {
-        // Log the logout action
-        Log::create([
-            'userId' => Auth::id(),  // Get the authenticated user's ID
-            'action' => 'Déconnexion utilisateur',
-            'message' => 'Utilisateur avec l\'ID ' . Auth::id() . ' a été déconnecté.'
-        ]);
-        
         // Destroy all session variables
         $_SESSION = [];
         
@@ -160,11 +134,11 @@ class Auth{
        return true;
    }
 
-   public static function isAdmin(){
+   public static function isTechnicien(){
         if (!self::isLoggedIn()) {
             return false;
         }
-        return $_SESSION['user_role'] === 'admin';
+        return $_SESSION['user_role'] === 'technicien';
    }
 
    public static function isClassic(){

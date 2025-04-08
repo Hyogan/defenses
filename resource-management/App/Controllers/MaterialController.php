@@ -11,6 +11,7 @@ class MaterialController extends Controller {
     public function index() {
         $this->checkAuth();
         $materials = Material::getAll();
+        // dd($materials);
         $this->view('materials/index', ['materials' => $materials], 'admin');
     }
 

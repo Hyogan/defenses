@@ -10,7 +10,8 @@ class Material extends Model {
 
     public static function getAll() {
         $db = Database::getInstance();
-        return $db->fetchAll("SELECT * FROM materiels");
+        $sql = "SELECT m.*, c.nom as nom_categorie FROM materiels as m JOIN categories as c ON c.id_categorie = m.id_categorie";
+        return $db->fetchAll($sql);
     }
 
     public static function getById($id) {

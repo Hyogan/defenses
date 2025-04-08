@@ -1,8 +1,7 @@
 <?php
 namespace App\Controllers;
 
-use App\Models\Ligne;
-use App\Models\Log;
+use App\Models\Material;
 use App\Models\User;
 use Core\Controller;
 use App\Models\Auth;
@@ -19,8 +18,8 @@ class DashboardController extends Controller {
         if(!Auth::isLoggedIn()) {
             return $this->redirect('/auth/login');
         }
-        if (Auth::isAdmin()) {
-            return $this->redirect('/dashboard/admin');
+        if (Auth::isTechnicien()) {
+            return $this->redirect('/dashboard/technicien');
         } elseif (Auth::isClassic()) {
             return $this->redirect('/dashboard/classic');
         } else {
@@ -47,39 +46,44 @@ class DashboardController extends Controller {
     }
 
     // Tableau de bord pour l'Admin (gestion complète)
-    public function admin() {
+    public function technicien() {
         // Vérification du rôle de l'utilisateur (Admin)
         if (!Auth::isLoggedIn()) {
             return $this->redirect('/auth/login');
         }
-        if (!Auth::isAdmin()) {
+        if (!Auth::isTechnicien()) {
             return $this->redirect('/dashboard');
         }
         // Logic spécifique à l'admin
         $allUsers = User::getAll();
+        $userCount = User::count();
+        $materialCount = Material::count();
+        // $activiteRecente = Log::getAll(5);
+
         $data = [
           'allUsers' => $allUsers,
-          'userCount' => User::count(),
-          // 'lignesCount' => Ligne::count(),
-          // 'activiteRecente' => Log::getAll(5),
-        ];
-        return $this->view('dashboard/admin', 
+          'userCount' => $userCount,
+          'materialCount' => $materialCount,
+          'activiteRecente' => [],
+      ];
+      
+        return $this->view('dashboard/technicien', 
         $data,
         'admin');
     }
 
-    public function logs()
-    {
-      if (!Auth::isLoggedIn()) {
-          return $this->redirect('/auth/login');
-      }
-      if (!Auth::isAdmin()) {
-          return $this->redirect('/dashboard');
-      }
-      // $logs = Log::getAll();
-      // dd($logs  );
-      return $this->view('dashboard/logs',
-      ['logsData' => []],
-      'admin');
-    }
+    // public function logs()
+    // {
+    //   if (!Auth::isLoggedIn()) {
+    //       return $this->redirect('/auth/login');
+    //   }
+    //   if (!Auth::isAdmin()) {
+    //       return $this->redirect('/dashboard');
+    //   }
+    //   // $logs = Log::getAll();
+    //   // dd($logs  );
+    //   return $this->view('dashboard/logs',
+    //   ['logsData' => []],
+    //   'admin');
+    // }
   }

@@ -5,8 +5,7 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Nom</th>
-                        <th>Prénom</th>
+                        <th>Nom complet</th>
                         <th>Email</th>
                         <th>Statut</th>
                         <th>Rôle</th>
@@ -15,18 +14,18 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><?php echo $userInfo['id']; ?></td>
-                        <td><?php echo $userInfo['nom']; ?></td>
-                        <td><?php echo $userInfo['prenom']; ?></td>
+                        <td><?php echo $userInfo['id_utilisateur']; ?></td>
+                        <td><?php echo $userInfo['nom_complet']; ?></td>
+                        <!-- <td><?php echo $userInfo['prenom']; ?></td> -->
                         <td><?php echo $userInfo['email']; ?></td>
-                        <td><?php echo $userInfo['statut']; ?></td>
+                        <td><?php echo $userInfo['statut'] ?? 'actif'; ?></td>
                         <td><?php echo $userInfo['role']; ?></td>
                         <td><?php echo $userInfo['date_creation']; ?></td>
                     </tr>
                 </tbody>
             </table>
 
-            <h2>Logs de l'utilisateur</h2>
+            <!-- <h2>Logs de l'utilisateur</h2>
             <table class="table">
                 <thead>
                     <tr>
@@ -53,5 +52,5 @@
             </table>
         <?php else: ?>
             <p>Aucune information d'utilisateur ou log trouvé.</p>
-        <?php endif; ?>
+        <?php endif; ?> -->
     </div>

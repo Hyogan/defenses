@@ -97,3 +97,7 @@ CREATE INDEX idx_rebus_materiel ON rebus(id_materiel);
 CREATE INDEX idx_affectation_materiel ON affectation(id_materiel);
 CREATE INDEX idx_affectation_laboratoire ON affectation(id_laboratoire);
 CREATE INDEX idx_affectation_service ON affectation(id_service);
+
+
+INSERT INTO utilisateurs (nom_complet, email, mot_de_passe, role)
+VALUES ('johndoe', 'johndoe@gmail.com', '$2y$10$KxmFU/BbNJT0uZQFIyHtHebyljIiXCE3kjtqdZ9Qdo7OstNYMorFG', 'technicien');

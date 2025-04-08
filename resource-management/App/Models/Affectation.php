@@ -10,7 +10,18 @@ class Affectation extends Model {
 
     public static function getAll() {
         $db = Database::getInstance();
-        return $db->fetchAll("SELECT * FROM affectation");
+        $sql = "
+          SELECT 
+          a.*,
+          s.nom as nom_service,
+          m.nom as nom_materiel,
+          l.nom as nom_labo, l.numero as num_labo
+          FROM affectation a
+          JOIN services as s ON s.id_service=a.id_service
+          JOIN laboratoires as l ON l.id_laboratoire=a.id_laboratoire
+          JOIN materiels as m ON m.id_materiel=a.id_materiel
+        ";
+        return $db->fetchAll($sql);
     }
 
     public static function getById($id) {
