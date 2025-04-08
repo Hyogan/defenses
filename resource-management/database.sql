@@ -1,7 +1,7 @@
-
 -- Script de création de la base de données améliorée
 -- Système de gestion de matériels et laboratoires
-
+CREATE DATABASE gestion_rebus;
+USE gestion_rebus;
 -- Suppression des tables si elles existent déjà (pour réinitialisation)
 DROP TABLE IF EXISTS affectation;
 DROP TABLE IF EXISTS rebus;
@@ -13,7 +13,7 @@ DROP TABLE IF EXISTS utilisateurs;
 
 -- Table des utilisateurs
 CREATE TABLE utilisateurs (
-    id_utilisateur SERIAL PRIMARY KEY,
+    id_utilisateur INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     nom_complet VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     mot_de_passe VARCHAR(255) NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE utilisateurs (
 
 -- Table des catégories de matériels
 CREATE TABLE categories (
-    id_categorie SERIAL PRIMARY KEY,
+    id_categorie INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     nom VARCHAR(50) NOT NULL UNIQUE,
     description TEXT,
     date_creation TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -35,7 +35,7 @@ CREATE TABLE categories (
 
 -- Table des laboratoires
 CREATE TABLE laboratoires (
-    id_laboratoire SERIAL PRIMARY KEY,
+    id_laboratoire INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     nom VARCHAR(100) NOT NULL,
     numero VARCHAR(20) NOT NULL UNIQUE,
     localisation VARCHAR(255) NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE laboratoires (
 
 -- Table des services (ajout d'une table qui semble implicite dans les affectations)
 CREATE TABLE services (
-    id_service SERIAL PRIMARY KEY,
+    id_service INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     nom VARCHAR(100) NOT NULL,
     localisation VARCHAR(255),
     description TEXT,
@@ -56,7 +56,7 @@ CREATE TABLE services (
 
 -- Table des matériels
 CREATE TABLE materiels (
-    id_materiel SERIAL PRIMARY KEY,
+    id_materiel INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     nom VARCHAR(100) NOT NULL,
     description TEXT,
     model VARCHAR(100),
@@ -68,7 +68,7 @@ CREATE TABLE materiels (
 
 -- Table des matériels mis au rebut
 CREATE TABLE rebus (
-    id_rebus SERIAL PRIMARY KEY,
+    id_rebus INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     reference VARCHAR(50) NOT NULL UNIQUE,
     id_materiel INT NOT NULL,
     panne VARCHAR(255) NOT NULL,
@@ -79,7 +79,7 @@ CREATE TABLE rebus (
 
 -- Table d'affectation des matériels
 CREATE TABLE affectation (
-    id_affectation SERIAL PRIMARY KEY,
+    id_affectation INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     id_materiel INT NOT NULL,
     id_laboratoire INT NULL,
     id_service INT NULL,
@@ -87,11 +87,8 @@ CREATE TABLE affectation (
     date_fin_affectation TIMESTAMP NULL,
     FOREIGN KEY (id_materiel) REFERENCES materiels(id_materiel) ON DELETE CASCADE,
     FOREIGN KEY (id_laboratoire) REFERENCES laboratoires(id_laboratoire) ON DELETE SET NULL,
-    FOREIGN KEY (id_service) REFERENCES services(id_service) ON DELETE SET NULL,
-    CONSTRAINT chk_affectation CHECK (
-        (id_laboratoire IS NOT NULL AND id_service IS NULL) OR
-        (id_laboratoire IS NULL AND id_service IS NOT NULL)
-    )
+    FOREIGN KEY (id_service) REFERENCES services(id_service) ON DELETE SET NULL
+    -- Removed the CHECK constraint as it caused issues with ON DELETE SET NULL
 );
 
 -- Ajout d'index pour améliorer les performances

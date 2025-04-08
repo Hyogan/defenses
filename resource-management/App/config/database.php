@@ -1,7 +1,7 @@
 <?php
 return [
   'host' => 'localhost',
-  'dbname' => 'gestion_lignes',
+  'dbname' => 'gestion_rebus',
   'username' => 'root',
   'password' => 'root',
   'charset' => 'utf8mb4',

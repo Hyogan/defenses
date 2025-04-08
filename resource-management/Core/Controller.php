@@ -1,6 +1,8 @@
 <?php
 namespace Core;
 
+use App\Models\Auth;
+
 class Controller {
     protected function view($view, $data = [], $layout='default') {
       extract($data);
@@ -29,6 +31,14 @@ class Controller {
         http_response_code($statusCode);
         echo json_encode($data);
         exit;
+    }
+
+    public function checkAuth() 
+    {
+        if(!Auth::isLoggedIn()) 
+        {
+          return $this->redirect('/');
+        }
     }
 }
 

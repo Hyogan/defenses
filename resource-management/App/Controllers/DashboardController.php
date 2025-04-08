@@ -5,7 +5,6 @@ use App\Models\Ligne;
 use App\Models\Log;
 use App\Models\User;
 use Core\Controller;
-use App\Models\Stagiaire;
 use App\Models\Auth;
 
 class DashboardController extends Controller {
@@ -41,8 +40,8 @@ class DashboardController extends Controller {
           'dashboard/classic',
           [
             'userCount' => User::count(),
-            'lignesCount' => Ligne::count(),
-            'lignesRecentes' => Ligne::getAll(10)
+            // 'lignesCount' => Ligne::count(),
+            // 'lignesRecentes' => Ligne::getAll(10)
             ],
          'admin');
     }
@@ -61,8 +60,8 @@ class DashboardController extends Controller {
         $data = [
           'allUsers' => $allUsers,
           'userCount' => User::count(),
-          'lignesCount' => Ligne::count(),
-          'activiteRecente' => Log::getAll(5),
+          // 'lignesCount' => Ligne::count(),
+          // 'activiteRecente' => Log::getAll(5),
         ];
         return $this->view('dashboard/admin', 
         $data,
@@ -77,10 +76,10 @@ class DashboardController extends Controller {
       if (!Auth::isAdmin()) {
           return $this->redirect('/dashboard');
       }
-      $logs = Log::getAll();
+      // $logs = Log::getAll();
       // dd($logs  );
       return $this->view('dashboard/logs',
-      ['logsData' => $logs],
+      ['logsData' => []],
       'admin');
     }
   }

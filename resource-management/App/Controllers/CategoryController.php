@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Core\Controller;
+use Core\Controller;
 use App\Models\Category;
 
 class CategoryController extends Controller {

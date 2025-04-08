@@ -60,28 +60,27 @@
   </nav>
 
     <script>
-        const menuData = {
-            admin: [
-                { title: "Dashboard", icon: "fas fa-tachometer-alt", link: "dashboard/admin" },
-                { title: "Utilisateurs", icon: "fas fa-users", link: "user/management" },
-                { title: "Lignes", icon: "fas fa-folder-open", link: "lignes" },
-                // { title: "Lignes", icon: "fas fa-folder-open", link: "lignes" },
-                { title: "Logs", icon: "fas fa-tachometer-alt", link: "dashboard/logs" },
-                { title: "Deconnexion", icon: "fas fa-sign-out-alt", link: "auth/logout" },
-                // { title: "Tuteurs", icon: "fas fa-user-tie", link: "dashboard/tuteurs" },
-                // { title: "Affectations", icon: "fas fa-link", link: "dashboard/affectations" },
-                // { title: "Tâches", icon: "fas fa-tasks", link: "taches" },
-                // { title: "Documents", icon: "fas fa-folder-open", link: "documents" },
-                // { title: "Evaluations", icon: "fas fa-star-half-alt", link: "evaluations" },
-                // { title: "Retards", icon: "fas fa-exclamation-triangle", link: "retards" }
-            ],
-            classic: [
-                { title: "Dashboard", icon: "fas fa-tachometer-alt", link: "dashboard/classic" },
-                { title: "Lignes", icon: "fas fa-folder-open", link: "lignes" },
-                { title: "Deconnexion", icon: "fas fa-sign-out-alt", link: "auth/logout" },
-                // { title: "Evaluations", icon: "fas fa-star-half-alt", link: "evaluations/supervisor" },
-                // { title: "Retards", icon: "fas fa-exclamation-triangle", link: "retards" }
-            ],
+      const menuData = {
+              admin: [
+                  { title: "Dashboard", icon: "fas fa-tachometer-alt", link: "dashboard/admin" },
+                  { title: "Utilisateurs", icon: "fas fa-users", link: "users" }, // Updated link
+                  { title: "Catégories", icon: "fas fa-tags", link: "categories" }, // New link
+                  { title: "Laboratoires", icon: "fas fa-flask", link: "laboratories" }, // New link
+                  { title: "Services", icon: "fas fa-tools", link: "services" }, // New link
+                  { title: "Matériels", icon: "fas fa-desktop", link: "materials" }, // New link
+                  { title: "Rebus", icon: "fas fa-trash-alt", link: "rebus" }, // New link
+                  { title: "Affectations", icon: "fas fa-link", link: "affectations" }, // New link
+                  { title: "Lignes", icon: "fas fa-folder-open", link: "lignes" },
+                  { title: "Logs", icon: "fas fa-history", link: "dashboard/logs" }, // Updated icon
+                  { title: "Déconnexion", icon: "fas fa-sign-out-alt", link: "auth/logout" },
+              ],
+              classic: [
+                  { title: "Dashboard", icon: "fas fa-tachometer-alt", link: "dashboard/classic" },
+                  { title: "Lignes", icon: "fas fa-folder-open", link: "lignes" },
+                  { title: "Déconnexion", icon: "fas fa-sign-out-alt", link: "auth/logout" },
+                  // { title: "Evaluations", icon: "fas fa-star-half-alt", link: "evaluations/supervisor" },
+                  // { title: "Retards", icon: "fas fa-exclamation-triangle", link: "retards" }
+              ],
             // tuteur: [
             //     { title: "Dashboard", icon: "fas fa-tachometer-alt", link: "/tuteur" },
             //     { title: "Stagiaires", icon: "fas fa-graduation-cap", link: "tuteur/stagiaires" },

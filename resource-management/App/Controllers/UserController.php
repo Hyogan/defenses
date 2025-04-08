@@ -1,206 +1,80 @@
-<?php 
+<?php
+
 namespace App\Controllers;
 
-use App\Models\Log;
 use Core\Controller;
-use App\Models\Auth;
 use App\Models\User;
-use DateInterval;
-class UserController extends Controller{
-      public function index() {
-        if (!Auth::isAdmin()) {
-            $this->redirect('/dashboard');
-        }
-        $allUsers = User::getAll();
-        return $this->view('utilisateurs/liste', [
-            'title' => 'Liste des utilisateurs | Gestion de lignes',
-            'pageTitle' => 'Liste des utilisateurs',
-            'utilisateurs' => $allUsers,
-        ], 'admin');
+
+class UserController extends Controller {
+
+    public function index() {
+        $this->checkAuth();
+        $users = User::getAll();
+        $this->view('users/index', ['users' => $users], 'admin');
     }
 
     public function create() {
-        if (!Auth::isAdmin()) {
-            $this->redirect('/dashboard');
-        }
-        return $this->view('utilisateurs/ajouter', [], 'admin');
+        $this->checkAuth();
+        $this->view('users/create', [], 'admin');
     }
 
     public function store() {
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            return $this->redirect('/user/create');
-        }
-        // dd()
+        $this->checkAuth();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = [
+                'nom_complet' => $_POST['nom_complet'],
+                'email' => $_POST['email'],
+                'mot_de_passe' => password_hash($_POST['mot_de_passe'], PASSWORD_DEFAULT),
+                'role' => $_POST['role']
+            ];
 
-        $data = $_POST;
-        $errors = [];
-
-        // Basic input checks (replace with more robust checks as needed)
-        if (empty($data['nom'])) {
-            $errors['nom'] = "Le nom est requis.";
+            if (User::add($data)) {
+                $_SESSION['success'] = "Utilisateur ajouté avec succès.";
+                $this->redirect('/users');
+            } else {
+                $_SESSION['error'] = "Erreur lors de l'ajout de l'utilisateur.";
+                $this->redirect('/users/create');
+            }
         }
-        if (empty($data['prenom'])) {
-            $errors['prenom'] = "Le prénom est requis.";
-        }
-        if (empty($data['email'])) {
-            $errors['email'] = "L'email est requis.";
-        } elseif (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-            $errors['email'] = "L'email n'est pas valide.";
-        }
-        if (empty($data['mot_de_passe'])) {
-            $errors['mot_de_passe'] = "Le mot de passe est requis.";
-        } elseif (strlen($data['mot_de_passe']) < 6) {
-            $errors['mot_de_passe'] = "Le mot de passe doit contenir au moins 6 caractères.";
-        }
-        if (!in_array($data['role'], ['admin', 'classic'])) {
-            $errors['role'] = "Role invalide.";
-        }
-        if (!in_array($data['statut'], ['actif', 'inactif'])) {
-            $errors['statut'] = "Statut invalide.";
-        }
-        if (!empty($errors)) {
-            return $this->view('utilisateurs/ajouter', ['errors' => $errors, 'data' => $data], 'admin');
-        }
-
-        if (User::getByEmail($data['email'])) {
-            $errors['email'] = "L'email choisi est déjà utilisé.";
-            return $this->view('utilisateurs/ajouter', ['errors' => $errors, 'data' => $data], 'admin');
-        }
-
-        $userId = User::create($data, $data['role']);
-
-        if (!$userId) {
-            error_log("User creation failed for email: " . $data['email']);
-            $errors['creation'] = "Une erreur est survenue lors de la création de l'utilisateur.";
-            return $this->view('utilisateurs/ajouter', ['errors' => $errors, 'data' => $data], 'admin');
-        }
-
-        return $this->redirect('/user/management');
     }
 
     public function edit($id) {
-        if (!Auth::isAdmin()) {
-            $this->redirect('/dashboard');
-        }
+        $this->checkAuth();
         $user = User::getById($id);
-        if (!$user) {
-            $this->redirect('/user/management');
-        }
-        return $this->view('utilisateurs/modifier', ['user' => $user], 'admin');
+        $this->view('users/edit', ['user' => $user], 'admin');
     }
 
     public function update($id) {
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            return $this->redirect('/user/management');
-        }
+        $this->checkAuth();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = [
+                'nom_complet' => $_POST['nom_complet'],
+                'email' => $_POST['email'],
+                'role' => $_POST['role']
+            ];
 
-        $data = $_POST;
-        $errors = [];
+            if (!empty($_POST['mot_de_passe'])) {
+                $data['mot_de_passe'] = password_hash($_POST['mot_de_passe'], PASSWORD_DEFAULT);
+            }
 
-        if (empty($data['nom'])) {
-            $errors['nom'] = "Le nom est requis.";
+            if (User::update($id, $data)) {
+                $_SESSION['success'] = "Utilisateur mis à jour avec succès.";
+                $this->redirect('/users');
+            } else {
+                $_SESSION['error'] = "Erreur lors de la mise à jour de l'utilisateur.";
+                $this->redirect("/users/edit/$id");
+            }
         }
-        if (empty($data['prenom'])) {
-            $errors['prenom'] = "Le prénom est requis.";
-        }
-        if (empty($data['email'])) {
-            $errors['email'] = "L'email est requis.";
-        } elseif (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-            $errors['email'] = "L'email n'est pas valide.";
-        }
-        if (!empty($data['mot_de_passe']) && strlen($data['mot_de_passe']) < 6) {
-            $errors['mot_de_passe'] = "Le mot de passe doit contenir au moins 6 caractères.";
-        }
-        if (!in_array($data['role'], ['admin', 'classic'])) {
-            $errors['role'] = "Role invalide.";
-        }
-        if (!in_array($data['statut'], ['actif', 'inactif'])) {
-            $errors['statut'] = "Statut invalide.";
-        }
-
-        if (!empty($errors)) {
-            $data['id'] = $id;
-            return $this->view('utilisateurs/modifier', ['errors' => $errors, 'user' => $data], 'admin');
-        }
-
-        if (User::getByEmail($data['email'])) {
-            $errors['email'] = "L'email choisi est déjà utilisé.";
-            $data['id'] = $id;
-            return $this->view('utilisateurs/modifier', ['errors' => $errors, 'user' => $data], 'admin');
-        }
-
-        $updated = User::update($id, $data);
-
-        if (!$updated) {
-            error_log("User update failed for ID: " . $id);
-            $errors['update'] = "Une erreur est survenue lors de la mise à jour de l'utilisateur.";
-            $data['id'] = $id;
-            return $this->view('utilisateurs/modifier', ['errors' => $errors, 'user' => $data], 'admin');
-        }
-
-        return $this->redirect('/user/management');
-    }
-    public function show($id)
-    {
-      $user = User::getById($id);
-        if (!$user) {
-            $this->redirect('/user/management');
-        }
-        $userInfos = $user; 
-        $userInfos['logs'] = Log::getByUserId($id);
-        // dd($userInfos);
-        return $this->view('utilisateurs/details', ['userInfo' => $userInfos], 'admin');
     }
 
     public function delete($id) {
-        if (!Auth::isAdmin()) {
-            $this->redirect('/dashboard');
+        $this->checkAuth();
+        if (User::delete($id)) {
+            $_SESSION['success'] = "Utilisateur supprimé avec succès.";
+        } else {
+            $_SESSION['error'] = "Erreur lors de la suppression de l'utilisateur.";
         }
-
-        $deleted = User::delete($id);
-
-        if (!$deleted) {
-            error_log("User deletion failed for ID: " . $id);
-        }
-
-        return $this->redirect('/user/management');
+        $this->redirect('/users');
     }
-    public function profile() {
-      // dd('fhsdf');
-      if(!Auth::isLoggedIn()) 
-      {
-        $this->redirect('/');
-      }
-      $user = User::getById(Auth::id());
-      $userInfos = $user;
-      return $this->view('dashboard/profile',['userInfo' => $userInfos],'admin');
-    }
-
-    public function changePassword() {
-      if (!Auth::isLoggedIn()) {
-          return $this->redirect('/auth/login');
-      }
-      if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-          $currentPassword = $_POST['current_password'];
-          $newPassword = $_POST['new_password'];
-          $confirmPassword = $_POST['confirm_password'];
-          $user = User::getById(Auth::id());
-          if (!password_verify($currentPassword, $user['mot_de_passe'])) {
-              $message = ['type' => 'danger', 'text' => 'Mot de passe actuel incorrect.'];
-          } elseif ($newPassword !== $confirmPassword) {
-              $message = ['type' => 'danger', 'text' => 'Les nouveaux mots de passe ne correspondent pas.'];
-          } elseif (strlen($newPassword) < 8) {
-              $message = ['type' => 'danger', 'text' => 'Le nouveau mot de passe doit contenir au moins 8 caractères.'];
-          } else {
-              User::updatePassword(Auth::id(), $newPassword);
-              $message = ['type' => 'success', 'text' => 'Mot de passe modifié avec succès.'];
-          }
-
-          return $this->view('dashboard/profile', 
-          ['message' => $message,'userInfo' => $user],
-          'admin'
-        );
-      }
-      return $this->redirect('user/profile');
-  }
 }
+?>
