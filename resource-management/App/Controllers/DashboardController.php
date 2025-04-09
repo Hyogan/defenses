@@ -63,11 +63,13 @@ class DashboardController extends Controller {
         $materialCount = Material::count();
         $laboratoires = Laboratory::getAll();
         $services = Service::getAll();
+        $materials = Material::getAll();
         // dd($demandes);
 
         $data = [
           'allUsers' => $allUsers,
           'userCount' => $userCount,
+          'materials'  => $materials,
           'materialCount' => $materialCount,
           'demandes' => $demandes,
           'laboratoires' => $laboratoires,
@@ -120,7 +122,7 @@ class DashboardController extends Controller {
       'dashboard/technicien',
       [
         'materiels' => $materiels,
-        '$demandes' => $demandes,
+        'demandes' => $demandes,
         ],
      'admin');
 }

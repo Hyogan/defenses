@@ -27,6 +27,7 @@ $routes = [
     '/users' => [UserController::class, 'index'],
     '/users/create' => [UserController::class, 'create'],
     '/user/profile' => [UserController::class, 'profile'],
+    '/user/changePassword' => [UserController::class, 'changePassword'],
     '/users/store' => [UserController::class, 'store'],
     '/users/edit/{id}' => [UserController::class, 'edit'],
     '/users/update/{id}' => [UserController::class, 'update'],

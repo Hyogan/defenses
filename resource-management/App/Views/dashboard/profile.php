@@ -5,21 +5,17 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Nom</th>
-                        <th>Prénom</th>
+                        <th>Nom complet</th>
                         <th>Email</th>
-                        <th>Statut</th>
                         <th>Rôle</th>
                         <th>Date de création</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><?php echo $userInfo['id']; ?></td>
-                        <td><?php echo $userInfo['nom']; ?></td>
-                        <td><?php echo $userInfo['prenom']; ?></td>
+                        <td><?php echo $userInfo['id_utilisateur']; ?></td>
+                        <td><?php echo $userInfo['nom_complet']; ?></td>
                         <td><?php echo $userInfo['email']; ?></td>
-                        <td><?php echo $userInfo['statut']; ?></td>
                         <td><?php echo $userInfo['role']; ?></td>
                         <td><?php echo $userInfo['date_creation']; ?></td>
                     </tr>
