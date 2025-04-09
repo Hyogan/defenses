@@ -1,5 +1,5 @@
 <?php
-define('APP_URL', 'http://localhost:8000/gestion-lignes');
+define('APP_URL', 'http://localhost:8080/gestion-rebus');
 define('APP_NAME', 'Gestion des Composants et rebus - IUG');
 define('APP_EMAIL', 'iug@gmail.com');
 define('APP_VERSION', '1.0.0');

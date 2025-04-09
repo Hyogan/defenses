@@ -2,8 +2,8 @@
 
 use App\Controllers\AuthController;
 use App\Controllers\DashboardController;
+use App\Controllers\DemandeChangementController;
 use App\Controllers\UserController;
-use App\Controllers\LignesController;
 use App\Controllers\CategoryController;
 use App\Controllers\LaboratoryController;
 use App\Controllers\ServiceController;
@@ -23,21 +23,10 @@ $routes = [
     '/register' => [AuthController::class, 'register'],
     '/password/reset' => [AuthController::class, 'resetPassword'],
 
-    // Routes pour les lignes
-    '/lignes' => [LignesController::class, 'liste'],
-    '/lignes/ajouter' => [LignesController::class, 'ajouter'],
-    '/lignes/store' => [LignesController::class, 'store'],
-    '/lignes/modifier/{id}' => [LignesController::class, 'edit'],
-    '/lignes/update/{id}' => [LignesController::class, 'update'],
-    '/lignes/supprimer/{id}' => [LignesController::class, 'supprimer'],
-    '/lignes/details/{id}' => [LignesController::class, 'details'],
-    '/lignes/imprimer' => [LignesController::class, 'imprimer'],
-    '/lignes/export' => [LignesController::class, 'exportPdf'],
-    '/ligne/export/{id}' => [LignesController::class, 'imprimer'],
-
     // Routes pour la gestion des utilisateurs
     '/users' => [UserController::class, 'index'],
     '/users/create' => [UserController::class, 'create'],
+    '/user/profile' => [UserController::class, 'profile'],
     '/users/store' => [UserController::class, 'store'],
     '/users/edit/{id}' => [UserController::class, 'edit'],
     '/users/update/{id}' => [UserController::class, 'update'],
@@ -95,9 +84,17 @@ $routes = [
     '/affectations/delete/{id}' => [AffectationController::class, 'delete'],
     '/affectations/filter' => [AffectationController::class, 'filter'],
 
+    // Routes pour gerer les demandes 
+    '/demandes_changement' => [DemandeChangementController::class, 'index'],
+    '/demandes_changement/create' => [DemandeChangementController::class, 'create'],
+    '/demandes_changement/store' => [DemandeChangementController::class, 'store'],
+    '/demandes_changement/edit/{id}' => [DemandeChangementController::class, 'edit'],
+    '/demandes_changement/update/{id}' => [DemandeChangementController::class, 'update'],
+    '/demandes_changement/delete/{id}' => [DemandeChangementController::class, 'delete'],
     // Routes pour les tableaux de bord (selon le rôle)
     '/dashboard' => [DashboardController::class, 'index'],
-    '/dashboard/classic' => [DashboardController::class, 'classic'],
+    '/dashboard/responsable-laboratoire' => [DashboardController::class, 'responsableLabo'],
+    '/dashboard/utilisateur' => [DashboardController::class, 'utilisateur'],
     '/dashboard/technicien' => [DashboardController::class, 'technicien'],
     // '/dashboard/logs' => [DashboardController::class, 'logs'],
 ];

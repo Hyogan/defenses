@@ -37,7 +37,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand" href="/">
-                <img src="logo-iug.png" alt="Logo Camrails">
+                <img src="logo-iug.png" alt="Logo IUG">
                 Gestion de Matériel et Laboratoires
             </a>
         </div>

@@ -7,6 +7,7 @@
             <th>Nom</th>
             <th>Email</th>
             <th>Rôle</th>
+            <th>Service</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -17,6 +18,7 @@
                 <td><?php echo $utilisateur['nom_complet']; ?></td>
                 <td><?php echo $utilisateur['email']; ?></td>
                 <td><?php echo $utilisateur['role']; ?></td>
+                <td><?php echo $utilisateur['nom_service']; ?></td>
                 <td>
                     <a href="/users/details/<?php echo $utilisateur['id_utilisateur']; ?>" class="btn btn-info btn-sm">Détails</a>
                     <a href="/users/edit/<?php echo $utilisateur['id_utilisateur']; ?>" class="btn btn-warning btn-sm">Modifier</a>

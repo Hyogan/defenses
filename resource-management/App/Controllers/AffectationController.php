@@ -13,6 +13,7 @@ class AffectationController extends Controller {
     public function index() {
         $this->checkAuth();
         $affectations = Affectation::getAll();
+        // dd($affectations);
         $this->view('affectations/index', ['affectations' => $affectations], 'admin');
     }
 

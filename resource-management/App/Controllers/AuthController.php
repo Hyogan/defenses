@@ -56,7 +56,7 @@ class AuthController extends Controller{
           // Check if the account is active FIRST
           // if ($user['statut'] !== 'actif') {
           //      return $this->view('auth/login', [
-          //         'title' => 'Connexion | Gestion de lignes',
+          //         'title' => 'Connexion | Gestion de composants et de rebus',
           //         'pageTitle' => 'Connexion',
           //         'email' => $email,
           //         'error' => 'Votre compte est désactivé'

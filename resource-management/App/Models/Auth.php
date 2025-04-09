@@ -141,6 +141,20 @@ class Auth{
         return $_SESSION['user_role'] === 'technicien';
    }
 
+    public static function isResponsableLabo(){
+      if (!self::isLoggedIn()) {
+          return false;
+      }
+      return $_SESSION['user_role'] === 'responsable_laboratoire';
+  }
+
+  public static function isUtilisateur(){
+    if (!self::isLoggedIn()) {
+        return false;
+    }
+    return $_SESSION['user_role'] === 'utilisateur';
+  }
+
    public static function isClassic(){
         if (!self::isLoggedIn()) {
             return false;

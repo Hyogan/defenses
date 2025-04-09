@@ -53,9 +53,9 @@
     </style>
   <nav id="sidebarMenu" style="height: 100%; height: 100vh;" class="sticky col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
           <div class="top-block">
-            <h1 class="h1">Camrail</h1>
-            <img src="/logo-iug.png" alt="Logo Camrails">
-            <h2 class="h5">Gestion Lignes</h2>
+            <h1 class="h1">IUG</h1>
+            <img src="/logo-iug.png" alt="Logo IUG">
+            <h2 class="h5">Gestion Composants et rebus</h2>
           </div>
             <ul id="menu">
             </ul>
@@ -63,37 +63,30 @@
 
     <script>
       const menuData = {
-              technicien: [
-                  { title: "Dashboard", icon: "fas fa-tachometer-alt", link: "dashboard/technicien" },
-                  { title: "Utilisateurs", icon: "fas fa-users", link: "users" }, // Updated link
-                  { title: "Catégories", icon: "fas fa-tags", link: "categories" }, // New link
-                  { title: "Laboratoires", icon: "fas fa-flask", link: "laboratories" }, // New link
-                  { title: "Services", icon: "fas fa-tools", link: "services" }, // New link
-                  { title: "Matériels", icon: "fas fa-desktop", link: "materials" }, // New link
-                  { title: "Rebus", icon: "fas fa-trash-alt", link: "rebus" }, // New link
-                  { title: "Affectations", icon: "fas fa-link", link: "affectations" }, // New link
-                  { title: "Déconnexion", icon: "fas fa-sign-out-alt", link: "auth/logout" },
-              ],
-              classic: [
-                  { title: "Dashboard", icon: "fas fa-tachometer-alt", link: "dashboard/classic" },
-                  { title: "Lignes", icon: "fas fa-folder-open", link: "lignes" },
-                  { title: "Déconnexion", icon: "fas fa-sign-out-alt", link: "auth/logout" },
-                  // { title: "Evaluations", icon: "fas fa-star-half-alt", link: "evaluations/supervisor" },
-                  // { title: "Retards", icon: "fas fa-exclamation-triangle", link: "retards" }
-              ],
-            // tuteur: [
-            //     { title: "Dashboard", icon: "fas fa-tachometer-alt", link: "/tuteur" },
-            //     { title: "Stagiaires", icon: "fas fa-graduation-cap", link: "tuteur/stagiaires" },
-            //     { title: "Tâches", icon: "fas fa-tasks", link: "taches/" },
-            //     { title: "Documents", icon: "fas fa-folder-open", link: "documents/tutor" },
-            //     { title: "Evaluations", icon: "fas fa-star-half-alt", link: "evaluations/tutor" },
-            //     { title: "Retards", icon: "fas fa-exclamation-triangle", link: "retards" }
-            //   ],
-            // stagiaire: [
-            //     { title: "Dashboard", icon: "fas fa-tachometer-alt", link: "/stagiaire" },
-            //     { title: "Tâches", icon: "fas fa-tasks", link: "tasks/intern" },
-            //     { title: "Documents", icon: "fas fa-folder-open", link: "documents/intern" },
-            // ],
+      responsable_laboratoire: [
+          { title: "Dashboard", icon: "fas fa-tachometer-alt", link: "dashboard/technicien" },
+          { title: "Utilisateurs", icon: "fas fa-users", link: "users" },
+          { title: "Catégories", icon: "fas fa-tags", link: "categories" },
+          { title: "Laboratoires", icon: "fas fa-flask", link: "laboratories" },
+          { title: "Services", icon: "fas fa-tools", link: "services" },
+          { title: "Matériels", icon: "fas fa-desktop", link: "materials" },
+          { title: "Rebus", icon: "fas fa-trash-alt", link: "rebus" },
+          { title: "Affectations", icon: "fas fa-link", link: "affectations" },
+          { title: "Demandes", icon: "fas fa-clipboard-list", link: "demandes_changement" }, // New link
+          { title: "Déconnexion", icon: "fas fa-sign-out-alt", link: "auth/logout" },
+      ],
+      technicien: [
+          { title: "Dashboard", icon: "fas fa-tachometer-alt", link: "dashboard/technicien" },
+          { title: "Rebus", icon: "fas fa-trash-alt", link: "rebus" },
+          { title: "Demandes", icon: "fas fa-clipboard-list", link: "demandes_changement" }, // New Link
+          { title: "Déconnexion", icon: "fas fa-sign-out-alt", link: "auth/logout" },
+      ],
+        utilisateur: [
+            { title: "Dashboard", icon: "fas fa-tachometer-alt", link: "dashboard/utilisateur" },
+            { title: "Demande de Changement", icon: "fas fa-file-alt", link: "demandes_changement/create" }, // New Link
+            { title: "Déconnexion", icon: "fas fa-sign-out-alt", link: "auth/logout" },
+        ],
+      
         };
 
         const role = "<?php echo $_SESSION['user_role']; ?>"; 
@@ -107,8 +100,12 @@
                 menuElement.appendChild(li);
             });
         } else {
+          window.location.href('/login');
+          const li = document.createElement("li");
+                li.innerHTML = `<a href="/"><i class=""></i>Bla Bla</a>`;
+                //menuElement.appendChild(li);
             // Gérer le cas où le rôle n'est pas reconnu (par exemple, redirection)
-            window.location.href = "/login"; // Rediriger vers la page de connexion
+            // window.location.href = "/login"; // Rediriger vers la page de connexion
         }
     </script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> -->

@@ -10,7 +10,9 @@ class User extends Model {
 
     public static function getAll() {
         $db = Database::getInstance();
-        return $db->fetchAll("SELECT * FROM utilisateurs");
+        $sql = "SELECT u.*,s.nom as nom_service FROM utilisateurs u 
+                JOIN services s ON s.id_service=u.id_service";
+        return $db->fetchAll($sql);
     }
 
     public static function getById($id) {
@@ -20,9 +22,10 @@ class User extends Model {
 
     public static function add($data) {
         $db = Database::getInstance();
-        $query = "INSERT INTO utilisateurs (nom_complet, email, mot_de_passe, role) VALUES (?, ?, ?, ?)";
+        $query = "INSERT INTO utilisateurs (nom_complet,id_service, email, mot_de_passe, role) VALUES (?, ?, ?,?, ?)";
         $params = [
             $data['nom_complet'],
+            $data['id_service'],
             $data['email'],
             $data['mot_de_passe'],
             $data['role']
@@ -32,9 +35,10 @@ class User extends Model {
 
     public static function update($id, $data) {
         $db = Database::getInstance();
-        $query = "UPDATE utilisateurs SET nom_complet = ?, email = ?, mot_de_passe = ?, role = ? WHERE id_utilisateur = ?";
+        $query = "UPDATE utilisateurs SET nom_complet = ?,id_service = ?, email = ?, mot_de_passe = ?, role = ? WHERE id_utilisateur = ?";
         $params = [
             $data['nom_complet'],
+            $data['id_service'],
             $data['email'],
             $data['mot_de_passe'],
             $data['role'],

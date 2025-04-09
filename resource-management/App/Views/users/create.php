@@ -13,11 +13,22 @@
                 <label for="mot_de_passe" class="form-label">Mot de passe</label>
                 <input type="password" class="form-control" id="mot_de_passe" name="mot_de_passe" required>
             </div>
+
             <div class="mb-3">
                 <label for="role" class="form-label">Rôle</label>
                 <select class="form-select" id="role" name="role" required>
                     <option value="technicien">Technicien</option>
-                    <option value="classic">Classic</option>
+                    <option value="responsable_laboratoire">responsable Laboratoire</option>
+                    <option value="utilisateur">utilisateur classique</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="role" class="form-label">Service</label>
+                <select class="form-select" id="id_service" name="id_service" required>
+                    <?php foreach ($services as $service): ?>
+                        <option value="<?= $service['id_service'] ?>"><?= $service['nom'] ?></option>
+                    <?php endforeach; ?>
                 </select>
             </div>
             <button type="submit" class="btn btn-primary">Créer</button>

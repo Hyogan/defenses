@@ -18,6 +18,11 @@ class Service extends Model {
         return $db->fetch("SELECT * FROM services WHERE id_service = ?", [$id]);
     }
 
+  //   public static function getByUserId($userId) {
+  //     $db = Database::getInstance();
+  //     return $db->fetch("SELECT * FROM services WHERE id_service = ?", [$userId]);
+  // }
+
     public static function add($data) {
         $db = Database::getInstance();
         $query = "INSERT INTO services (nom, localisation, description) VALUES (?, ?, ?)";
